@@ -1,0 +1,169 @@
+<?xml version="1.0" ?>
+<sdf version="1.4">
+  <world name="default">
+    <gui>
+
+     <camera name="user_camera">
+       <pose>-4312 3473 5405 0 0.78 -0.71</pose>
+     </camera>
+
+      <plugin name='simslides' filename='libsimslides.so'>
+        <slide_prefix>roscon-slide</slide_prefix>
+        <near_clip>0.1</near_clip>
+        <far_clip>50000</far_clip>
+
+        <keyframe type='lookat' number='0'/>
+
+        <keyframe type='cam_pose' pose='645.22 129.59 190.3 0 -0.05 -2.92'
+            text='Check camera info:
+
+ros2 topic echo /camera/camera_info
+
+Check camera images:
+
+ros2 run rqt_image_view rqt_image_view /camera/image_raw
+
+Model SDF:
+
+<model name="camera">
+  <static>true</static>
+  <link name="barrel">
+    <sensor type="camera" name="camera">
+      <update_rate>60</update_rate>
+      <visualize>true</visualize>
+      <camera name="camera">
+        <horizontal_fov>0.927295218</horizontal_fov>
+        <image>
+          <width>640</width>
+          <height>480</height>
+          <format>R8G8B8</format>
+        </image>
+        <clip>
+          <near>0.02</near>
+          <far>300</far>
+        </clip>
+        <distortion>
+          <k1>-0.1</k1>
+          <k2>-0.1</k2>
+          <p1>0</p1>
+          <p2>0</p2>
+          <k3>-0.1</k3>
+          <center>0.5 0.5</center>
+        </distortion>
+      </camera>
+      <plugin name="camera_controller" filename="libgazebo_ros_camera.so">
+        <border_crop>false</border_crop>
+      </plugin>
+    </sensor>
+  </link>
+</model>
+'/>
+
+      </plugin>
+
+      <plugin name='keyboard' filename='libKeyboardGUIPlugin.so'>
+      </plugin>
+
+    </gui>
+
+    <scene>
+      <sky>
+        <clouds>
+          <speed>12</speed>
+        </clouds>
+      </sky>
+      <!-- what are good params here? the fog is making the heightmap black near the camera -->
+      <!--fog>
+        <color>0.8 0.8 0.8 1.0</color>
+        <type>linear</type>
+        <start>500</start>
+        <end>10000</end>
+        <density>0.0</density>
+      </fog-->
+      <grid>false</grid>
+      <origin_visual>false</origin_visual>
+    </scene>
+
+    <light type="directional" name="sun">
+      <pose>0 0 -100 0 0 0</pose>
+      <cast_shadows>true</cast_shadows>
+      <diffuse>0.9 0.8 0.8 1</diffuse>
+      <specular>0.2 0.2 0.2 1</specular>
+      <attenuation>
+        <range>1000</range>
+        <constant>0.9</constant>
+        <linear>0.01</linear>
+        <quadratic>0.001</quadratic>
+      </attenuation>
+      <direction>-0.5 0.1 -0.9</direction>
+    </light>
+
+     <model name="heightmap">
+      <static>true</static>
+      <link name="link">
+        <visual name="visual_yosemite">
+          <geometry>
+            <heightmap>
+              <texture>
+                <diffuse>file://media/textures/yosemite_color.png</diffuse>
+                <normal>file://media/materials/textures/flat_normal.png</normal>
+                <size>6000</size>
+              </texture>
+              <uri>file://media/yosemite_elevation.tif</uri>
+              <pos>0 0 -1250</pos>
+            </heightmap>
+          </geometry>
+        </visual>
+      </link>
+    </model>
+
+    <!-- gazebo_ros_camera-->
+
+    <include>
+      <name>sign-0</name>
+      <pose>642.5 129.79 190 0 -0.04 -2.49</pose>
+      <uri>model://sign-0</uri>
+    </include>
+
+    <model name="camera">
+      <pose>644 129.19 190 0 -0.1898 -2.715</pose>
+      <static>true</static>
+      <link name="link">
+        <sensor type="camera" name="camera">
+          <update_rate>60</update_rate>
+          <visualize>true</visualize>
+          <camera name="camera">
+            <horizontal_fov>0.927295218</horizontal_fov>
+            <image>
+              <width>640</width>
+              <height>480</height>
+              <format>R8G8B8</format>
+            </image>
+            <clip>
+              <near>0.02</near>
+              <far>5000</far>
+            </clip>
+            <distortion>
+              <k1>-0.3</k1>
+              <k2>-0.3</k2>
+              <p1>0</p1>
+              <p2>0</p2>
+              <k3>-0.3</k3>
+              <center>0.5 0.5</center>
+            </distortion>
+          </camera>
+          <plugin name="camera_controller" filename="libgazebo_ros_camera.so">
+            <border_crop>false</border_crop>
+          </plugin>
+        </sensor>
+      </link>
+    </model>
+
+    <include>
+      <name>roscon-slide-0</name>
+      <pose>-3000 1132 360 0 0 -1.57</pose>
+      <uri>model://roscon-slide-0</uri>
+    </include>
+
+  </world>
+</sdf>
