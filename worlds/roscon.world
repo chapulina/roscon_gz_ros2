@@ -14,6 +14,68 @@
 
         <keyframe type='lookat' number='0'/>
 
+        <keyframe type='lookat' number='1'/>
+
+        <keyframe type='lookat' number='2'/>
+
+        <keyframe type='lookat' number='3'/>
+
+        <keyframe type='lookat' number='4'/>
+
+        <keyframe type='lookat' number='5'/>
+
+        <keyframe type='lookat' number='6'/>
+
+        <keyframe type='lookat' number='7'/>
+
+        <keyframe type='lookat' number='8'/>
+
+        <keyframe type='lookat' number='9'/>
+
+        <keyframe type='lookat' number='10'/>
+
+        <keyframe type='lookat' number='11'/>
+
+        <keyframe type='lookat' number='12'/>
+
+        <keyframe type='lookat' number='13'/>
+
+        <keyframe type='lookat' number='14'/>
+
+        <keyframe type='lookat' number='15'/>
+
+        <keyframe type='lookat' number='16'/>
+
+        <keyframe type='lookat' number='17'/>
+
+        <keyframe type='lookat' number='18'/>
+
+        <keyframe type='lookat' number='19'/>
+
+        <keyframe type='lookat' number='20'/>
+
+        <keyframe type='lookat' number='21'/>
+
+        <keyframe type='lookat' number='22'/>
+
+        <keyframe type='lookat' number='23'/>
+
+        <keyframe type='lookat' number='24'/>
+
+        <keyframe type='lookat' number='25'/>
+
+        <keyframe type='lookat' number='26'/>
+
+        <keyframe type='lookat' number='27'/>
+
+        <keyframe type='lookat' number='28'/>
+
+        <keyframe type='lookat' number='29'/>
+
+        <keyframe type='lookat' number='30'/>
+
+        <keyframe type='lookat' number='31'/>
+
         <keyframe type='cam_pose' pose='645.22 129.59 190.3 0 -0.05 -2.92'
             text='Check camera info:
 
@@ -162,6 +224,409 @@ Model SDF:
     <include>
       <name>roscon-slide-0</name>
       <pose>-3000 1132 360 0 0 -1.57</pose>
+      <uri>model://roscon-slide-0</uri>
+    </include>
+
+    <include>
+      <name>roscon-slide-1</name>
+      <pose>
+        -449.5713015419551
+        100.11364847261098
+        188.87493776954113
+        0
+        0
+        2.9442795649913824
+      </pose>
+      <uri>model://roscon-slide-0</uri>
+    </include>
+
+    <include>
+      <name>roscon-slide-2</name>
+      <pose>
+        521.3608700353291
+        -141.50602061789016
+        449.08149189854066
+        0
+        0
+        0.12403624902317523
+      </pose>
+      <uri>model://roscon-slide-0</uri>
+    </include>
+
+    <include>
+      <name>roscon-slide-3</name>
+      <pose>
+        178.8654398585336
+        920.0259297191844
+        188.7472876374677
+        0
+        0
+        1.7539225582250975
+      </pose>
+      <uri>model://roscon-slide-0</uri>
+    </include>
+
+    <include>
+      <name>roscon-slide-4</name>
+      <pose>
+        -477.0356857090277
+        -622.354166921547
+        497.5959918110286
+        0
+        0
+        -0.24981913046026705
+      </pose>
+      <uri>model://roscon-slide-0</uri>
+    </include>
+
+    <include>
+      <name>roscon-slide-5</name>
+      <pose>
+        1221.60338357735
+        -253.23198568535042
+        475.0821126797412
+        0
+        0
+        2.880297471480538
+      </pose>
+      <uri>model://roscon-slide-0</uri>
+    </include>
+
+    <include>
+      <name>roscon-slide-6</name>
+      <pose>
+        1379.737526673402
+        -711.0087737625602
+        399.96955523500657
+        0
+        0
+        -0.827707907542317
+      </pose>
+      <uri>model://roscon-slide-0</uri>
+    </include>
+
+    <include>
+      <name>roscon-slide-7</name>
+      <pose>
+        1526.7483164192026
+        -610.4578887781524
+        463.84584030844724
+        0
+        0
+        -2.4366296376714396
+      </pose>
+      <uri>model://roscon-slide-0</uri>
+    </include>
+
+    <include>
+      <name>roscon-slide-8</name>
+      <pose>
+        457.95487745121886
+        664.9424021673988
+        297.1073330241446
+        0
+        0
+        -1.044702982842486
+      </pose>
+      <uri>model://roscon-slide-0</uri>
+    </include>
+
+    <include>
+      <name>roscon-slide-9</name>
+      <pose>
+        -59.7669981248838
+        916.1018999876578
+        356.516142235115
+        0
+        0
+        -0.6821379927376277
+      </pose>
+      <uri>model://roscon-slide-0</uri>
+    </include>
+
+    <include>
+      <name>roscon-slide-10</name>
+      <pose>
+        -253.374149452962
+        387.5088242098959
+        466.9171021130408
+        0
+        0
+        2.452053254366553
+      </pose>
+      <uri>model://roscon-slide-0</uri>
+    </include>
+
+    <include>
+      <name>roscon-slide-11</name>
+      <pose>
+        -963.0727111628037
+        793.564496990706
+        448.74954854257084
+        0
+        0
+        0.5043479672068263
+      </pose>
+      <uri>model://roscon-slide-0</uri>
+    </include>
+
+    <include>
+      <name>roscon-slide-12</name>
+      <pose>
+        -105.7659881325859
+        -16.909491218630478
+        223.94041971649898
+        0
+        0
+        -0.5119488473838469
+      </pose>
+      <uri>model://roscon-slide-0</uri>
+    </include>
+
+    <include>
+      <name>roscon-slide-13</name>
+      <pose>
+        559.8477836860952
+        345.59255963237
+        193.29410261537714
+        0
+        0
+        -1.0651857368099833
+      </pose>
+      <uri>model://roscon-slide-0</uri>
+    </include>
+
+    <include>
+      <name>roscon-slide-14</name>
+      <pose>
+        410.01034648538825
+        397.85696002103737
+        359.5466411214914
+        0
+        0
+        -0.925198698701974
+      </pose>
+      <uri>model://roscon-slide-0</uri>
+    </include>
+
+    <include>
+      <name>roscon-slide-15</name>
+      <pose>
+        -170.46381859208725
+        460.76351514628504
+        302.8778121643684
+        0
+        0
+        2.1832500183263557
+      </pose>
+      <uri>model://roscon-slide-0</uri>
+    </include>
+
+    <include>
+      <name>roscon-slide-16</name>
+      <pose>
+        -755.8074652683983
+        431.9030928548252
+        202.39306617020293
+        0
+        0
+        2.3105155685113132
+      </pose>
+      <uri>model://roscon-slide-0</uri>
+    </include>
+
+    <include>
+      <name>roscon-slide-17</name>
+      <pose>
+        415.0137656986801
+        -937.7083310960321
+        229.57354644472483
+        0
+        0
+        -2.178944224685889
+      </pose>
+      <uri>model://roscon-slide-0</uri>
+    </include>
+
+    <include>
+      <name>roscon-slide-18</name>
+      <pose>
+        -304.4647985401406
+        378.27767339925845
+        403.5677055427936
+        0
+        0
+        -0.038158550003024594
+      </pose>
+      <uri>model://roscon-slide-0</uri>
+    </include>
+
+    <include>
+      <name>roscon-slide-19</name>
+      <pose>
+        1503.2889874471807
+        -688.5876505421245
+        462.54894197441536
+        0
+        0
+        -2.6660528908641457
+      </pose>
+      <uri>model://roscon-slide-0</uri>
+    </include>
+
+    <include>
+      <name>roscon-slide-20</name>
+      <pose>
+        671.94251611089
+        281.0605446060058
+        468.46717935062065
+        0
+        0
+        0.6294102111524653
+      </pose>
+      <uri>model://roscon-slide-0</uri>
+    </include>
+
+    <include>
+      <name>roscon-slide-21</name>
+      <pose>
+        -2.5015657308121035
+        -590.1797286811473
+        167.70030135449815
+        0
+        0
+        -0.19871080460994328
+      </pose>
+      <uri>model://roscon-slide-0</uri>
+    </include>
+
+    <include>
+      <name>roscon-slide-22</name>
+      <pose>
+        -48.67698167828928
+        362.5044427339851
+        276.8709643150493
+        0
+        0
+        0.8275339250516129
+      </pose>
+      <uri>model://roscon-slide-0</uri>
+    </include>
+
+    <include>
+      <name>roscon-slide-23</name>
+      <pose>
+        732.3853848385847
+        690.5387774356643
+        483.3511135114346
+        0
+        0
+        -1.3926539623175542
+      </pose>
+      <uri>model://roscon-slide-0</uri>
+    </include>
+
+    <include>
+      <name>roscon-slide-24</name>
+      <pose>
+        419.2948586255038
+        369.943704745423
+        228.12699298697683
+        0
+        0
+        -2.3869977804948
+      </pose>
+      <uri>model://roscon-slide-0</uri>
+    </include>
+
+    <include>
+      <name>roscon-slide-25</name>
+      <pose>
+        223.42213793539213
+        -530.4794303859449
+        431.73738998777714
+        0
+        0
+        1.3708505480569757
+      </pose>
+      <uri>model://roscon-slide-0</uri>
+    </include>
+
+    <include>
+      <name>roscon-slide-26</name>
+      <pose>
+        56.13564046770489
+        -291.3382208644233
+        440.7157785869824
+        0
+        0
+        2.124605968819557
+      </pose>
+      <uri>model://roscon-slide-0</uri>
+    </include>
+
+    <include>
+      <name>roscon-slide-27</name>
+      <pose>
+        85.39858731688719
+        682.2454751376324
+        122.09306185177806
+        0
+        0
+        1.7905644906725202
+      </pose>
+      <uri>model://roscon-slide-0</uri>
+    </include>
+
+    <include>
+      <name>roscon-slide-28</name>
+      <pose>
+        -615.4007171796891
+        -69.56889711248994
+        138.54326775324893
+        0
+        0
+        -1.6940759391897813
+      </pose>
+      <uri>model://roscon-slide-0</uri>
+    </include>
+
+    <include>
+      <name>roscon-slide-29</name>
+      <pose>
+        642.1928494726753
+        649.9634533798035
+        420.0707030149804
+        0
+        0
+        -0.24444331080469306
+      </pose>
+      <uri>model://roscon-slide-0</uri>
+    </include>
+
+    <include>
+      <name>roscon-slide-30</name>
+      <pose>
+        -473.5748575576047
+        405.58715379724595
+        278.40537728335096
+        0
+        0
+        -2.8032966892640965
+      </pose>
+      <uri>model://roscon-slide-0</uri>
+    </include>
+
+    <include>
+      <name>roscon-slide-31</name>
+      <pose>
+        -577.95524348239
+        -347.98939676056966
+        345.9137455356556
+        0
+        0
+        -1.1646783259607798
+      </pose>
       <uri>model://roscon-slide-0</uri>
     </include>
 
