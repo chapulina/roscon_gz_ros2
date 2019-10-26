@@ -14,13 +14,13 @@
 
         <keyframe type='lookat' number='0'/>
 
-        <keyframe type='lookat' number='1'/>
+        <keyframe type='stack' number='1'/>
 
-        <keyframe type='lookat' number='2'/>
+        <keyframe type='stack' number='2'/>
 
-        <keyframe type='lookat' number='3'/>
+        <keyframe type='stack' number='3'/>
 
-        <keyframe type='lookat' number='4'/>
+        <keyframe type='stack' number='4'/>
 
         <keyframe type='lookat' number='5'/>
 
@@ -28,37 +28,37 @@
 
         <keyframe type='lookat' number='7'/>
 
-        <keyframe type='lookat' number='8'/>
+        <keyframe type='stack' number='8'/>
 
-        <keyframe type='lookat' number='9'/>
+        <keyframe type='stack' number='9'/>
 
         <keyframe type='lookat' number='10'/>
 
-        <keyframe type='lookat' number='11'/>
+        <keyframe type='stack' number='11'/>
 
-        <keyframe type='lookat' number='12'/>
+        <keyframe type='stack' number='12'/>
 
-        <keyframe type='lookat' number='13'/>
+        <keyframe type='stack' number='13'/>
 
-        <keyframe type='lookat' number='14'/>
+        <keyframe type='stack' number='14'/>
 
         <keyframe type='lookat' number='15'/>
 
         <keyframe type='lookat' number='16'/>
 
-        <keyframe type='lookat' number='17'/>
+        <keyframe type='stack' number='17'/>
 
-        <keyframe type='lookat' number='18'/>
+        <keyframe type='stack' number='18'/>
 
-        <keyframe type='lookat' number='19'/>
+        <keyframe type='stack' number='19'/>
 
-        <keyframe type='lookat' number='20'/>
+        <keyframe type='stack' number='20'/>
 
         <keyframe type='lookat' number='21'/>
 
-        <keyframe type='lookat' number='22'/>
+        <keyframe type='stack' number='22'/>
 
-        <keyframe type='lookat' number='23'/>
+        <keyframe type='stack' number='23'/>
 
         <keyframe type='lookat' number='24'/>
 
@@ -71,10 +71,6 @@
         <keyframe type='lookat' number='28'/>
 
         <keyframe type='lookat' number='29'/>
-
-        <keyframe type='lookat' number='30'/>
-
-        <keyframe type='lookat' number='31'/>
 
         <keyframe type='cam_pose' pose='645.22 129.59 190.3 0 -0.05 -2.92'
             text='Check camera info:
@@ -120,6 +116,298 @@ Model SDF:
   </link>
 </model>
 '/>
+
+        <keyframe type='cam_pose' pose='-1445.999 1108.47 -14.77 0 0.89 -1.644'
+            text='Gazebo ROS differential drive plugin demo
+
+Try sending commands:
+
+  ros2 topic pub /demo/cmd_demo geometry_msgs/Twist "{linear: {x: 1.0}}" -1
+
+  ros2 topic pub /demo/cmd_demo geometry_msgs/Twist "{angular: {z: 0.1}}" -1
+
+Try listening to odometry:
+
+  ros2 topic echo /demo/odom_demo
+
+Try listening to TF:
+
+  ros2 run tf2_ros tf2_echo odom_demo chassis
+
+  ros2 run tf2_ros tf2_echo chassis right_wheel
+
+  ros2 run tf2_ros tf2_echo chassis left_wheel
+
+Model SDF:
+
+<model name="vehicle">
+
+  <link name="chassis">
+    <pose>-0.151427 -0 0.175 0 -0 0</pose>
+    <inertial>
+      <mass>1.14395</mass>
+      <inertia>
+        <ixx>0.126164</ixx>
+        <ixy>0</ixy>
+        <ixz>0</ixz>
+        <iyy>0.416519</iyy>
+        <iyz>0</iyz>
+        <izz>0.481014</izz>
+      </inertia>
+    </inertial>
+    <visual name="visual">
+      <geometry>
+        <box>
+          <size>2.01142 1 0.568726</size>
+        </box>
+      </geometry>
+    </visual>
+    <collision name="collision">
+      <geometry>
+        <box>
+          <size>2.01142 1 0.568726</size>
+        </box>
+      </geometry>
+    </collision>
+  </link>
+
+  <link name="left_wheel">
+    <pose>0.554283 0.625029 -0.025 -1.5707 0 0</pose>
+    <inertial>
+      <mass>2</mass>
+      <inertia>
+        <ixx>0.145833</ixx>
+        <ixy>0</ixy>
+        <ixz>0</ixz>
+        <iyy>0.145833</iyy>
+        <iyz>0</iyz>
+        <izz>0.125</izz>
+      </inertia>
+    </inertial>
+    <visual name="visual">
+      <geometry>
+        <sphere>
+          <radius>0.3</radius>
+        </sphere>
+      </geometry>
+    </visual>
+    <collision name="collision">
+      <geometry>
+        <sphere>
+          <radius>0.3</radius>
+        </sphere>
+      </geometry>
+      <surface>
+        <friction>
+          <ode>
+            <mu>1</mu>
+            <mu2>1</mu2>
+            <slip1>0</slip1>
+            <slip2>0</slip2>
+          </ode>
+        </friction>
+        <contact>
+          <ode>
+            <soft_cfm>0</soft_cfm>
+            <soft_erp>0.2</soft_erp>
+            <kp>1e+13</kp>
+            <kd>1</kd>
+            <max_vel>0.01</max_vel>
+            <min_depth>0.01</min_depth>
+          </ode>
+        </contact>
+      </surface>
+    </collision>
+  </link>
+
+  <link name="right_wheel">
+    <pose>0.554282 -0.625029 -0.025 -1.5707 0 0</pose>
+    <inertial>
+      <mass>2</mass>
+      <inertia>
+        <ixx>0.145833</ixx>
+        <ixy>0</ixy>
+        <ixz>0</ixz>
+        <iyy>0.145833</iyy>
+        <iyz>0</iyz>
+        <izz>0.125</izz>
+      </inertia>
+    </inertial>
+    <visual name="visual">
+      <geometry>
+        <sphere>
+          <radius>0.3</radius>
+        </sphere>
+      </geometry>
+    </visual>
+    <collision name="collision">
+      <geometry>
+        <sphere>
+          <radius>0.3</radius>
+        </sphere>
+      </geometry>
+      <surface>
+        <friction>
+          <ode>
+            <mu>1</mu>
+            <mu2>1</mu2>
+            <slip1>0</slip1>
+            <slip2>0</slip2>
+          </ode>
+        </friction>
+        <contact>
+          <ode>
+            <soft_cfm>0</soft_cfm>
+            <soft_erp>0.2</soft_erp>
+            <kp>1e+13</kp>
+            <kd>1</kd>
+            <max_vel>0.01</max_vel>
+            <min_depth>0.01</min_depth>
+          </ode>
+        </contact>
+      </surface>
+    </collision>
+  </link>
+
+  <link name="caster">
+    <pose>-0.957138 -0 -0.125 0 -0 0</pose>
+    <inertial>
+      <mass>1</mass>
+      <inertia>
+        <ixx>0.1</ixx>
+        <ixy>0</ixy>
+        <ixz>0</ixz>
+        <iyy>0.1</iyy>
+        <iyz>0</iyz>
+        <izz>0.1</izz>
+      </inertia>
+    </inertial>
+    <visual name="visual">
+      <geometry>
+        <sphere>
+          <radius>0.2</radius>
+        </sphere>
+      </geometry>
+    </visual>
+    <collision name="collision">
+      <geometry>
+        <sphere>
+          <radius>0.2</radius>
+        </sphere>
+      </geometry>
+    </collision>
+  </link>
+
+  <joint name="left_wheel_joint" type="revolute">
+    <parent>chassis</parent>
+    <child>left_wheel</child>
+    <axis>
+      <xyz>0 0 1</xyz>
+      <limit>
+        <lower>-1.79769e+308</lower>
+        <upper>1.79769e+308</upper>
+      </limit>
+    </axis>
+  </joint>
+
+  <joint name="right_wheel_joint" type="revolute">
+    <parent>chassis</parent>
+    <child>right_wheel</child>
+    <axis>
+      <xyz>0 0 1</xyz>
+      <limit>
+        <lower>-1.79769e+308</lower>
+        <upper>1.79769e+308</upper>
+      </limit>
+    </axis>
+  </joint>
+
+  <joint name="caster_wheel" type="ball">
+    <parent>chassis</parent>
+    <child>caster</child>
+  </joint>
+
+  <plugin name="diff_drive" filename="libgazebo_ros_diff_drive.so">
+
+    <ros>
+      <namespace>/demo</namespace>
+      <argument>cmd_vel:=cmd_demo</argument>
+      <argument>odom:=odom_demo</argument>
+    </ros>
+
+    <!-- wheels -->
+    <left_joint>left_wheel_joint</left_joint>
+    <right_joint>right_wheel_joint</right_joint>
+
+    <!-- kinematics -->
+    <wheel_separation>1.25</wheel_separation>
+    <wheel_diameter>0.6</wheel_diameter>
+
+    <!-- limits -->
+    <max_wheel_torque>20</max_wheel_torque>
+    <max_wheel_acceleration>1.0</max_wheel_acceleration>
+
+    <!-- output -->
+    <publish_odom>true</publish_odom>
+    <publish_odom_tf>true</publish_odom_tf>
+    <publish_wheel_tf>true</publish_wheel_tf>
+
+    <odometry_frame>odom_demo</odometry_frame>
+    <robot_base_frame>chassis</robot_base_frame>
+
+  </plugin>
+
+</model>
+'/>
+
+        <keyframe type='cam_pose' pose='-2038.547119 1229.816650 302.064453 0 0.852 1.407999'
+            text='Gazebo ROS video plugin demo
+
+The visual on top of the box is displaying the images coming from a camera.
+
+Model SDF:
+
+<model name="video">
+  <static>true</static>
+  <pose>-2039 1233 300 0 0 1.2</pose>
+  <link name="base_link">
+    <visual name="visual">
+      <geometry>
+        <box>
+          <size>0.5 0.5 0.5</size>
+        </box>
+      </geometry>
+      <plugin name="display_video_controller" filename="libgazebo_ros_video.so">
+        <ros>
+          <argument>~/image_raw:=/camera/image_raw</argument>
+        </ros>
+        <height>120</height>
+        <width>160</width>
+      </plugin>
+    </visual>
+    <collision name="collision">
+      <geometry>
+        <box>
+          <size>0.5 0.5 0.5</size>
+        </box>
+      </geometry>
+      <laser_retro>100.0</laser_retro>
+    </collision>
+  </link>
+</model>
+'/>
+
+        <keyframe type='lookat' number='30'/>
+
+        <keyframe type='lookat' number='31'/>
+
+        <keyframe type='stack' number='32'/>
+
+        <keyframe type='stack' number='33'/>
+
+        <keyframe type='lookat' number='34'/>
+
+        <keyframe type='lookat' number='35'/>
 
       </plugin>
 
@@ -179,13 +467,46 @@ Model SDF:
       </link>
     </model>
 
-    <!-- gazebo_ros_camera-->
-
+    <!-- gazebo_ros_camera -->
     <include>
       <name>sign-0</name>
       <pose>642.5 129.79 190 0 -0.04 -2.49</pose>
       <uri>model://sign-0</uri>
     </include>
+
+    <!-- quadcopter UAV -->
+    <actor name='quadrotor'>
+      <pose>644 124.19 190 0 -0.1898 -2.715</pose>
+      <link name='link'>
+        <pose frame=''>0 0 0.182466 0 -0 0</pose>
+        <visual name='visual'>
+          <geometry>
+            <mesh>
+              <uri>model://quadrotor/meshes/quadrotor_base.dae</uri>
+              <scale>1 1 1</scale>
+            </mesh>
+          </geometry>
+        </visual>
+      </link>
+        <script>
+          <loop>true</loop>
+          <auto_start>true</auto_start>
+          <trajectory id="0" type="square">
+             <waypoint>
+                <time>0.0</time>
+                <pose>641.230591 127.227409 190.249557 0.258249 -0.189799 -2.715000</pose>
+             </waypoint>
+             <waypoint>
+                <time>1.0</time>
+                <pose>637.627747 127.693840 190.502991 -0.506433 0.329275 -0.918891</pose>
+             </waypoint>
+             <waypoint>
+                <time>2.0</time>
+                <pose>641.230591 127.227409 190.249557 0.258249 -0.189799 -2.715000</pose>
+             </waypoint>
+          </trajectory>
+        </script>
+    </actor>
 
     <model name="camera">
       <pose>644 129.19 190 0 -0.1898 -2.715</pose>
@@ -214,12 +535,316 @@ Model SDF:
               <center>0.5 0.5</center>
             </distortion>
           </camera>
-          <plugin name="camera_controller" filename="libgazebo_ros_camera.so">
-            <border_crop>false</border_crop>
+          <plugin name="ros_publisher" filename="libgazebo_ros_camera.so">
+            <border_crop>true</border_crop>
           </plugin>
         </sensor>
       </link>
     </model>
+
+    <!-- ground station -->
+
+   <model name="ground">
+      <pose>
+        -1452 1087 -37 0 0 0
+      </pose>
+
+      <static>true</static>
+      <link name="link">
+        <visual name="visual">
+          <geometry>
+            <plane>
+              <normal>0 0 1</normal>
+              <size>50 50</size>
+            </plane>
+          </geometry>
+          <material>
+            <script>
+              <uri>file://media/materials/scripts/gazebo.material</uri>
+              <name>Gazebo/Residential</name>
+            </script>
+          </material>
+        </visual>
+        <collision name="collision">
+          <geometry>
+            <plane>
+              <normal>0 0 1</normal>
+              <size>50 50</size>
+            </plane>
+          </geometry>
+        </collision>
+      </link>
+
+    </model>
+
+    <!-- gazebo_ros_diff_drive -->
+    <include>
+      <name>sign-1</name>
+      <pose>-1445.46 1107.2 -16.98 0.805 -0.167 0.12</pose>
+      <uri>model://sign-1</uri>
+    </include>
+
+    <model name='vehicle'>
+      <pose>
+        -1452 1087 -36 0 0 0
+      </pose>
+
+      <link name='chassis'>
+        <pose>-0.151427 -0 0.175 0 -0 0</pose>
+        <inertial>
+          <mass>1.14395</mass>
+          <inertia>
+            <ixx>0.126164</ixx>
+            <ixy>0</ixy>
+            <ixz>0</ixz>
+            <iyy>0.416519</iyy>
+            <iyz>0</iyz>
+            <izz>0.481014</izz>
+          </inertia>
+        </inertial>
+        <visual name='visual'>
+          <geometry>
+            <box>
+              <size>2.01142 1 0.568726</size>
+            </box>
+          </geometry>
+        </visual>
+        <collision name='collision'>
+          <geometry>
+            <box>
+              <size>2.01142 1 0.568726</size>
+            </box>
+          </geometry>
+        </collision>
+      </link>
+
+      <link name='left_wheel'>
+        <pose>0.554283 0.625029 -0.025 -1.5707 0 0</pose>
+        <inertial>
+          <mass>2</mass>
+          <inertia>
+            <ixx>0.145833</ixx>
+            <ixy>0</ixy>
+            <ixz>0</ixz>
+            <iyy>0.145833</iyy>
+            <iyz>0</iyz>
+            <izz>0.125</izz>
+          </inertia>
+        </inertial>
+        <visual name='visual'>
+          <geometry>
+            <sphere>
+              <radius>0.3</radius>
+            </sphere>
+          </geometry>
+        </visual>
+        <collision name='collision'>
+          <geometry>
+            <sphere>
+              <radius>0.3</radius>
+            </sphere>
+          </geometry>
+          <surface>
+            <friction>
+              <ode>
+                <mu>1</mu>
+                <mu2>1</mu2>
+                <slip1>0</slip1>
+                <slip2>0</slip2>
+              </ode>
+            </friction>
+            <contact>
+              <ode>
+                <soft_cfm>0</soft_cfm>
+                <soft_erp>0.2</soft_erp>
+                <kp>1e+13</kp>
+                <kd>1</kd>
+                <max_vel>0.01</max_vel>
+                <min_depth>0.01</min_depth>
+              </ode>
+            </contact>
+          </surface>
+        </collision>
+      </link>
+
+      <link name='right_wheel'>
+        <pose>0.554282 -0.625029 -0.025 -1.5707 0 0</pose>
+        <inertial>
+          <mass>2</mass>
+          <inertia>
+            <ixx>0.145833</ixx>
+            <ixy>0</ixy>
+            <ixz>0</ixz>
+            <iyy>0.145833</iyy>
+            <iyz>0</iyz>
+            <izz>0.125</izz>
+          </inertia>
+        </inertial>
+        <visual name='visual'>
+          <geometry>
+            <sphere>
+              <radius>0.3</radius>
+            </sphere>
+          </geometry>
+        </visual>
+        <collision name='collision'>
+          <geometry>
+            <sphere>
+              <radius>0.3</radius>
+            </sphere>
+          </geometry>
+          <surface>
+            <friction>
+              <ode>
+                <mu>1</mu>
+                <mu2>1</mu2>
+                <slip1>0</slip1>
+                <slip2>0</slip2>
+              </ode>
+            </friction>
+            <contact>
+              <ode>
+                <soft_cfm>0</soft_cfm>
+                <soft_erp>0.2</soft_erp>
+                <kp>1e+13</kp>
+                <kd>1</kd>
+                <max_vel>0.01</max_vel>
+                <min_depth>0.01</min_depth>
+              </ode>
+            </contact>
+          </surface>
+        </collision>
+      </link>
+
+      <link name='caster'>
+        <pose>-0.957138 -0 -0.125 0 -0 0</pose>
+        <inertial>
+          <mass>1</mass>
+          <inertia>
+            <ixx>0.1</ixx>
+            <ixy>0</ixy>
+            <ixz>0</ixz>
+            <iyy>0.1</iyy>
+            <iyz>0</iyz>
+            <izz>0.1</izz>
+          </inertia>
+        </inertial>
+        <visual name='visual'>
+          <geometry>
+            <sphere>
+              <radius>0.2</radius>
+            </sphere>
+          </geometry>
+        </visual>
+        <collision name='collision'>
+          <geometry>
+            <sphere>
+              <radius>0.2</radius>
+            </sphere>
+          </geometry>
+        </collision>
+      </link>
+
+      <joint name='left_wheel_joint' type='revolute'>
+        <parent>chassis</parent>
+        <child>left_wheel</child>
+        <axis>
+          <xyz>0 0 1</xyz>
+          <limit>
+            <lower>-1.79769e+308</lower>
+            <upper>1.79769e+308</upper>
+          </limit>
+        </axis>
+      </joint>
+
+      <joint name='right_wheel_joint' type='revolute'>
+        <parent>chassis</parent>
+        <child>right_wheel</child>
+        <axis>
+          <xyz>0 0 1</xyz>
+          <limit>
+            <lower>-1.79769e+308</lower>
+            <upper>1.79769e+308</upper>
+          </limit>
+        </axis>
+      </joint>
+
+      <joint name='caster_wheel' type='ball'>
+        <parent>chassis</parent>
+        <child>caster</child>
+      </joint>
+
+      <plugin name='diff_drive' filename='libgazebo_ros_diff_drive.so'>
+
+        <ros>
+          <namespace>/demo</namespace>
+          <argument>cmd_vel:=cmd_demo</argument>
+          <argument>odom:=odom_demo</argument>
+        </ros>
+
+        <!-- wheels -->
+        <left_joint>left_wheel_joint</left_joint>
+        <right_joint>right_wheel_joint</right_joint>
+
+        <!-- kinematics -->
+        <wheel_separation>1.25</wheel_separation>
+        <wheel_diameter>0.6</wheel_diameter>
+
+        <!-- limits -->
+        <max_wheel_torque>20</max_wheel_torque>
+        <max_wheel_acceleration>1.0</max_wheel_acceleration>
+
+        <!-- output -->
+        <publish_odom>true</publish_odom>
+        <publish_odom_tf>true</publish_odom_tf>
+        <publish_wheel_tf>true</publish_wheel_tf>
+
+        <odometry_frame>odom_demo</odometry_frame>
+        <robot_base_frame>chassis</robot_base_frame>
+
+      </plugin>
+
+    </model>
+
+    <!-- TODO: fix sign -->
+    <!-- gazebo_ros_video -->
+    <include>
+      <name>sign-2</name>
+      <pose>-2038.749634 1231.889771 299.570740 -0.4624 0 0.41</pose>
+      <uri>model://sign-2</uri>
+    </include>
+
+    <model name="video">
+      <static>true</static>
+      <pose>-2037.794067 1231.204712 300.000000 0.305122 0 -0.219313</pose>
+      <link name="base_link">
+        <visual name="visual">
+          <geometry>
+            <box>
+              <size>0.5 0.5 0.5</size>
+            </box>
+          </geometry>
+          <plugin name="display_video_controller" filename="libgazebo_ros_video.so">
+            <ros>
+              <argument>~/image_raw:=/camera/image_raw</argument>
+            </ros>
+            <height>120</height>
+            <width>160</width>
+          </plugin>
+        </visual>
+        <collision name="collision">
+          <geometry>
+            <box>
+              <size>0.5 0.5 0.5</size>
+            </box>
+          </geometry>
+          <laser_retro>100.0</laser_retro>
+        </collision>
+      </link>
+    </model>
+
+
+    <!-- slides -->
 
     <include>
       <name>roscon-slide-0</name>
@@ -230,14 +855,14 @@ Model SDF:
     <include>
       <name>roscon-slide-1</name>
       <pose>
-        -449.5713015419551
-        100.11364847261098
-        188.87493776954113
+        521.3608700353291
+        -141.50602061789016
+        449.08149189854066
         0
         0
-        2.9442795649913824
+        0.12403624902317523
       </pose>
-      <uri>model://roscon-slide-0</uri>
+      <uri>model://roscon-slide-1</uri>
     </include>
 
     <include>
@@ -250,33 +875,33 @@ Model SDF:
         0
         0.12403624902317523
       </pose>
-      <uri>model://roscon-slide-0</uri>
+      <uri>model://roscon-slide-2</uri>
     </include>
 
     <include>
       <name>roscon-slide-3</name>
       <pose>
-        178.8654398585336
-        920.0259297191844
-        188.7472876374677
+        521.3608700353291
+        -141.50602061789016
+        449.08149189854066
         0
         0
-        1.7539225582250975
+        0.12403624902317523
       </pose>
-      <uri>model://roscon-slide-0</uri>
+      <uri>model://roscon-slide-3</uri>
     </include>
 
     <include>
       <name>roscon-slide-4</name>
       <pose>
-        -477.0356857090277
-        -622.354166921547
-        497.5959918110286
+        521.3608700353291
+        -141.50602061789016
+        449.08149189854066
         0
         0
-        -0.24981913046026705
+        0.12403624902317523
       </pose>
-      <uri>model://roscon-slide-0</uri>
+      <uri>model://roscon-slide-4</uri>
     </include>
 
     <include>
@@ -289,7 +914,7 @@ Model SDF:
         0
         2.880297471480538
       </pose>
-      <uri>model://roscon-slide-0</uri>
+      <uri>model://roscon-slide-5</uri>
     </include>
 
     <include>
@@ -302,7 +927,7 @@ Model SDF:
         0
         -0.827707907542317
       </pose>
-      <uri>model://roscon-slide-0</uri>
+      <uri>model://roscon-slide-6</uri>
     </include>
 
     <include>
@@ -315,7 +940,7 @@ Model SDF:
         0
         -2.4366296376714396
       </pose>
-      <uri>model://roscon-slide-0</uri>
+      <uri>model://roscon-slide-7</uri>
     </include>
 
     <include>
@@ -328,20 +953,26 @@ Model SDF:
         0
         -1.044702982842486
       </pose>
-      <uri>model://roscon-slide-0</uri>
+      <uri>model://roscon-slide-8</uri>
     </include>
 
     <include>
       <name>roscon-slide-9</name>
       <pose>
-        -59.7669981248838
+        457.95487745121886
+        664.9424021673988
+        297.1073330241446
+        0
+        0
+        -1.044702982842486
+        <!---59.7669981248838
         916.1018999876578
         356.516142235115
         0
         0
-        -0.6821379927376277
+        -0.6821379927376277-->
       </pose>
-      <uri>model://roscon-slide-0</uri>
+      <uri>model://roscon-slide-9</uri>
     </include>
 
     <include>
@@ -354,7 +985,7 @@ Model SDF:
         0
         2.452053254366553
       </pose>
-      <uri>model://roscon-slide-0</uri>
+      <uri>model://roscon-slide-10</uri>
     </include>
 
     <include>
@@ -367,20 +998,26 @@ Model SDF:
         0
         0.5043479672068263
       </pose>
-      <uri>model://roscon-slide-0</uri>
+      <uri>model://roscon-slide-11</uri>
     </include>
 
     <include>
       <name>roscon-slide-12</name>
       <pose>
-        -105.7659881325859
+        -963.0727111628037
+        793.564496990706
+        448.74954854257084
+        0
+        0
+        0.5043479672068263
+        <!---105.7659881325859
         -16.909491218630478
         223.94041971649898
         0
         0
-        -0.5119488473838469
+        -0.5119488473838469-->
       </pose>
-      <uri>model://roscon-slide-0</uri>
+      <uri>model://roscon-slide-12</uri>
     </include>
 
     <include>
@@ -393,20 +1030,26 @@ Model SDF:
         0
         -1.0651857368099833
       </pose>
-      <uri>model://roscon-slide-0</uri>
+      <uri>model://roscon-slide-13</uri>
     </include>
 
     <include>
       <name>roscon-slide-14</name>
       <pose>
-        410.01034648538825
+        559.8477836860952
+        345.59255963237
+        193.29410261537714
+        0
+        0
+        -1.0651857368099833
+        <!--410.01034648538825
         397.85696002103737
         359.5466411214914
         0
         0
-        -0.925198698701974
+        -0.925198698701974-->
       </pose>
-      <uri>model://roscon-slide-0</uri>
+      <uri>model://roscon-slide-14</uri>
     </include>
 
     <include>
@@ -419,7 +1062,7 @@ Model SDF:
         0
         2.1832500183263557
       </pose>
-      <uri>model://roscon-slide-0</uri>
+      <uri>model://roscon-slide-15</uri>
     </include>
 
     <include>
@@ -432,7 +1075,7 @@ Model SDF:
         0
         2.3105155685113132
       </pose>
-      <uri>model://roscon-slide-0</uri>
+      <uri>model://roscon-slide-16</uri>
     </include>
 
     <include>
@@ -445,46 +1088,64 @@ Model SDF:
         0
         -2.178944224685889
       </pose>
-      <uri>model://roscon-slide-0</uri>
+      <uri>model://roscon-slide-17</uri>
     </include>
 
     <include>
       <name>roscon-slide-18</name>
       <pose>
-        -304.4647985401406
+        415.0137656986801
+        -937.7083310960321
+        229.57354644472483
+        0
+        0
+        -2.178944224685889
+        <!---304.4647985401406
         378.27767339925845
         403.5677055427936
         0
         0
-        -0.038158550003024594
+        -0.038158550003024594-->
       </pose>
-      <uri>model://roscon-slide-0</uri>
+      <uri>model://roscon-slide-18</uri>
     </include>
 
     <include>
       <name>roscon-slide-19</name>
       <pose>
-        1503.2889874471807
+        415.0137656986801
+        -937.7083310960321
+        229.57354644472483
+        0
+        0
+        -2.178944224685889
+        <!--1503.2889874471807
         -688.5876505421245
         462.54894197441536
         0
         0
-        -2.6660528908641457
+        -2.6660528908641457-->
       </pose>
-      <uri>model://roscon-slide-0</uri>
+      <uri>model://roscon-slide-19</uri>
     </include>
 
     <include>
       <name>roscon-slide-20</name>
       <pose>
-        671.94251611089
+        415.0137656986801
+        -937.7083310960321
+        229.57354644472483
+        0
+        0
+        -2.178944224685889
+        <!--671.94251611089
         281.0605446060058
         468.46717935062065
         0
         0
-        0.6294102111524653
+        0.6294102111524653-->
       </pose>
-      <uri>model://roscon-slide-0</uri>
+      <uri>model://roscon-slide-20</uri>
     </include>
 
     <include>
@@ -497,7 +1158,7 @@ Model SDF:
         0
         -0.19871080460994328
       </pose>
-      <uri>model://roscon-slide-0</uri>
+      <uri>model://roscon-slide-21</uri>
     </include>
 
     <include>
@@ -510,20 +1171,26 @@ Model SDF:
         0
         0.8275339250516129
       </pose>
-      <uri>model://roscon-slide-0</uri>
+      <uri>model://roscon-slide-22</uri>
     </include>
 
     <include>
       <name>roscon-slide-23</name>
       <pose>
-        732.3853848385847
+        -48.67698167828928
+        362.5044427339851
+        276.8709643150493
+        0
+        0
+        0.8275339250516129
+        <!--732.3853848385847
         690.5387774356643
         483.3511135114346
         0
         0
-        -1.3926539623175542
+        -1.3926539623175542-->
       </pose>
-      <uri>model://roscon-slide-0</uri>
+      <uri>model://roscon-slide-23</uri>
     </include>
 
     <include>
@@ -536,7 +1203,7 @@ Model SDF:
         0
         -2.3869977804948
       </pose>
-      <uri>model://roscon-slide-0</uri>
+      <uri>model://roscon-slide-24</uri>
     </include>
 
     <include>
@@ -549,7 +1216,7 @@ Model SDF:
         0
         1.3708505480569757
       </pose>
-      <uri>model://roscon-slide-0</uri>
+      <uri>model://roscon-slide-25</uri>
     </include>
 
     <include>
@@ -562,7 +1229,7 @@ Model SDF:
         0
         2.124605968819557
       </pose>
-      <uri>model://roscon-slide-0</uri>
+      <uri>model://roscon-slide-26</uri>
     </include>
 
     <include>
@@ -575,7 +1242,7 @@ Model SDF:
         0
         1.7905644906725202
       </pose>
-      <uri>model://roscon-slide-0</uri>
+      <uri>model://roscon-slide-27</uri>
     </include>
 
     <include>
@@ -588,7 +1255,7 @@ Model SDF:
         0
         -1.6940759391897813
       </pose>
-      <uri>model://roscon-slide-0</uri>
+      <uri>model://roscon-slide-28</uri>
     </include>
 
     <include>
@@ -601,7 +1268,7 @@ Model SDF:
         0
         -0.24444331080469306
       </pose>
-      <uri>model://roscon-slide-0</uri>
+      <uri>model://roscon-slide-29</uri>
     </include>
 
     <include>
@@ -614,7 +1281,7 @@ Model SDF:
         0
         -2.8032966892640965
       </pose>
-      <uri>model://roscon-slide-0</uri>
+      <uri>model://roscon-slide-30</uri>
     </include>
 
     <include>
@@ -627,7 +1294,59 @@ Model SDF:
         0
         -1.1646783259607798
       </pose>
-      <uri>model://roscon-slide-0</uri>
+      <uri>model://roscon-slide-31</uri>
+    </include>
+
+    <include>
+      <name>roscon-slide-32</name>
+      <pose>
+        -449.5713015419551
+        100.11364847261098
+        188.87493776954113
+        0
+        0
+        2.9442795649913824
+      </pose>
+      <uri>model://roscon-slide-32</uri>
+    </include>
+
+    <include>
+      <name>roscon-slide-33</name>
+      <pose>
+        -449.5713015419551
+        100.11364847261098
+        188.87493776954113
+        0
+        0
+        2.9442795649913824
+      </pose>
+      <uri>model://roscon-slide-33</uri>
+    </include>
+
+    <include>
+      <name>roscon-slide-34</name>
+      <pose>
+        178.8654398585336
+        920.0259297191844
+        188.7472876374677
+        0
+        0
+        1.7539225582250975
+      </pose>
+      <uri>model://roscon-slide-34</uri>
+    </include>
+
+    <include>
+      <name>roscon-slide-35</name>
+      <pose>
+        477.0356857090277
+        -622.354166921547
+        497.5959918110286
+        0
+        0
+        -0.24981913046026705
+      </pose>
+      <uri>model://roscon-slide-35</uri>
     </include>
 
   </world>
