@@ -86,7 +86,15 @@
 
         <keyframe type='lookat' number='28'/>
 
-        <keyframe type='lookat' number='29'/>
+        <keyframe type='stack' number='29'/>
+
+        <keyframe type='stack' number='30'/>
+
+        <keyframe type='stack' number='31'/>
+
+        <keyframe type='stack' number='32'/>
+
+        <keyframe type='stack' number='33'/>
 
         <keyframe type='cam_pose' pose='645.22 129.59 190.3 0 -0.05 -2.92'
             text='<h2>Gazebo ROS camera plugin demo</h2>
@@ -415,17 +423,17 @@ The visual on top of the box is displaying the images coming from a ROS 2 image 
 </pre>
 '/>
 
-        <keyframe type='lookat' number='30'/>
-
-        <keyframe type='lookat' number='31'/>
-
-        <keyframe type='stack' number='32'/>
-
-        <keyframe type='stack' number='33'/>
-
         <keyframe type='lookat' number='34'/>
 
         <keyframe type='lookat' number='35'/>
+
+        <keyframe type='stack' number='36'/>
+
+        <keyframe type='stack' number='37'/>
+
+        <keyframe type='lookat' number='38'/>
+
+        <keyframe type='lookat' number='39'/>
 
 <!-- Presentation end -->
 
@@ -472,9 +480,75 @@ ros2 topic echo /gazebo_ros_gps_sensor/node/out
 <h3>Spherical coordinates</h3>
 
 <pre style="color: #222255; font-family: monospace">
-<spherical_coordinates>
-    <heading_deg>180</heading_deg>
-</spherical_coordinates>
+<<spherical_coordinates>>
+    <<heading_deg>>180<</heading_deg>>
+<</spherical_coordinates>>
+</pre>
+'/>
+
+        <keyframe type='cam_pose' pose='-1435.64 1108.94 -14.94 0 0.74 -1.988'
+            text='<h2>Gazebo ROS IMU plugin demo</h2>
+
+<h3>Try for example</h3>
+
+<p style="color: #222255; font-family: monospace">
+ros2 topic echo /gazebo_ros_imu_sensor/node/out
+</p>
+
+<h3>Sensor SDF</h3>
+
+<pre style="color: #222255; font-family: monospace">
+<<sensor name="vehicle_imu" type="imu">>
+  <<always_on>>true<</always_on>>
+  <<update_rate>>5<</update_rate>>
+  <<imu>>
+    <<angular_velocity>>
+      <<x>>
+        <<noise type="gaussian">>
+          <<mean>>0.0<</mean>>
+          <<stddev>>2e-4<</stddev>>
+        <</noise>>
+      <</x>>
+      <<y>>
+        <<noise type="gaussian">>
+          <<mean>>0.0<</mean>>
+          <<stddev>>2e-4<</stddev>>
+        <</noise>>
+      <</y>>
+      <<z>>
+        <<noise type="gaussian">>
+          <<mean>>0.0<</mean>>
+          <<stddev>>2e-4<</stddev>>
+        <</noise>>
+      <</z>>
+    <</angular_velocity>>
+    <<linear_acceleration>>
+      <<x>>
+        <<noise type="gaussian">>
+          <<mean>>0.0<</mean>>
+          <<stddev>>1.7e-2<</stddev>>
+        <</noise>>
+      <</x>>
+      <<y>>
+        <<noise type="gaussian">>
+          <<mean>>0.0<</mean>>
+          <<stddev>>1.7e-2<</stddev>>
+        <</noise>>
+      <</y>>
+      <<z>>
+        <<noise type="gaussian">>
+          <<mean>>0.0<</mean>>
+          <<stddev>>1.7e-2<</stddev>>
+        <</noise>>
+      <</z>>
+    <</linear_acceleration>>
+  <</imu>>
+  <<plugin name="node" filename="libgazebo_ros_imu_sensor.so">>
+    <<ros>>
+      <<namespace>>/gazebo_ros_imu<</namespace>>
+    <</ros>>
+  <</plugin>>
+<</sensor>>
 </pre>
 '/>
 
@@ -539,7 +613,7 @@ ros2 topic echo /gazebo_ros_gps_sensor/node/out
     <include>
       <name>gazebo_ros_camera</name>
       <pose>642.5 129.79 190 0 -0.04 -2.49</pose>
-      <uri>model://sign-0</uri>
+      <uri>model://gazebo_ros_camera</uri>
     </include>
 
     <!-- quadcopter UAV -->
@@ -641,6 +715,18 @@ ros2 topic echo /gazebo_ros_gps_sensor/node/out
               <size>50 50</size>
             </plane>
           </geometry>
+          <surface>
+            <bounce>
+              <restitution_coefficient>1.0</restitution_coefficient>
+              <threshold>0</threshold>
+            </bounce>
+            <contact>
+              <ode>
+                <max_vel>10000</max_vel>
+                <min_depth>0.001</min_depth>
+              </ode>
+            </contact>
+          </surface>
         </collision>
       </link>
 
@@ -649,13 +735,19 @@ ros2 topic echo /gazebo_ros_gps_sensor/node/out
     <include>
       <name>gazebo_ros_diff_drive</name>
       <pose>-1445.46 1107.2 -16.98 0.805 -0.167 0.12</pose>
-      <uri>model://sign-1</uri>
+      <uri>model://gazebo_ros_diff_drive</uri>
     </include>
 
     <include>
       <name>gazebo_ros_gps</name>
       <pose>-1440.46 1107.2 -16.98 0.805 -0.167 0.12</pose>
-      <uri>model://sign-1</uri>
+      <uri>model://gazebo_ros_gps</uri>
+    </include>
+
+    <include>
+      <name>gazebo_ros_imu_sensor</name>
+      <pose>-1435.45 1107.1999 -16.98 0.805 -0.167 -0.139</pose>
+      <uri>model://gazebo_ros_imu_sensor</uri>
     </include>
 
     <model name='vehicle'>
@@ -712,6 +804,57 @@ ros2 topic echo /gazebo_ros_gps_sensor/node/out
           <plugin name="node" filename="libgazebo_ros_gps_sensor.so">
             <ros>
               <namespace>/gazebo_ros_gps_sensor</namespace>
+            </ros>
+          </plugin>
+        </sensor>
+        <sensor name="vehicle_imu" type="imu">
+          <always_on>true</always_on>
+          <update_rate>5</update_rate>
+          <imu>
+            <angular_velocity>
+              <x>
+                <noise type="gaussian">
+                  <mean>0.0</mean>
+                  <stddev>2e-4</stddev>
+                </noise>
+              </x>
+              <y>
+                <noise type="gaussian">
+                  <mean>0.0</mean>
+                  <stddev>2e-4</stddev>
+                </noise>
+              </y>
+              <z>
+                <noise type="gaussian">
+                  <mean>0.0</mean>
+                  <stddev>2e-4</stddev>
+                </noise>
+              </z>
+            </angular_velocity>
+            <linear_acceleration>
+              <x>
+                <noise type="gaussian">
+                  <mean>0.0</mean>
+                  <stddev>1.7e-2</stddev>
+                </noise>
+              </x>
+              <y>
+                <noise type="gaussian">
+                  <mean>0.0</mean>
+                  <stddev>1.7e-2</stddev>
+                </noise>
+              </y>
+              <z>
+                <noise type="gaussian">
+                  <mean>0.0</mean>
+                  <stddev>1.7e-2</stddev>
+                </noise>
+              </z>
+            </linear_acceleration>
+          </imu>
+          <plugin name="node" filename="libgazebo_ros_imu_sensor.so">
+            <ros>
+              <namespace>/gazebo_ros_imu_sensor</namespace>
             </ros>
           </plugin>
         </sensor>
@@ -903,10 +1046,59 @@ ros2 topic echo /gazebo_ros_gps_sensor/node/out
 
     </model>
 
+    <model name="ball">
+      <pose>
+        -1467 1105 -30.5 0 0 0
+      </pose>
+      <allow_auto_disable>false</allow_auto_disable>
+      <static>false</static>
+      <link name="link">
+        <inertial>
+          <mass>0.026</mass>
+          <!-- inertia based on solid sphere 2/5 mr^2 -->
+          <inertia>
+            <ixx>1.664e-5</ixx>
+            <iyy>1.664e-5</iyy>
+            <izz>1.664e-5</izz>
+            <ixy>0</ixy>
+            <ixz>0</ixz>
+            <iyz>0</iyz>
+          </inertia>
+        </inertial>
+        <collision name="collision">
+          <geometry>
+            <sphere>
+              <radius>0.20</radius>
+            </sphere>
+          </geometry>
+          <surface>
+            <bounce>
+              <restitution_coefficient>10.0</restitution_coefficient>
+              <threshold>0</threshold>
+            </bounce>
+            <contact>
+              <ode>
+                <max_vel>10000</max_vel>
+                <min_depth>0.001</min_depth>
+              </ode>
+            </contact>
+          </surface>
+        </collision>
+        <visual name="visual">
+          <geometry>
+            <mesh>
+              <scale>0.20 0.20 0.20</scale>
+              <uri>model://robocup_3Dsim_ball/meshes/ball.dae</uri>
+            </mesh>
+          </geometry>
+        </visual>
+      </link>
+    </model>
+
     <include>
       <name>gazebo_ros_video</name>
       <pose>-2038.749634 1231.889771 299.570740 -0.4624 0 0.41</pose>
-      <uri>model://sign-2</uri>
+      <uri>model://gazebo_ros_video</uri>
     </include>
 
     <model name="video">
@@ -1370,6 +1562,58 @@ ros2 topic echo /gazebo_ros_gps_sensor/node/out
     <include>
       <name>roscon-slide-30</name>
       <pose>
+        642.1928494726753
+        649.9634533798035
+        420.0707030149804
+        0
+        0
+        -0.24444331080469306
+      </pose>
+      <uri>model://roscon-slide-30</uri>
+    </include>
+
+    <include>
+      <name>roscon-slide-31</name>
+      <pose>
+        642.1928494726753
+        649.9634533798035
+        420.0707030149804
+        0
+        0
+        -0.24444331080469306
+      </pose>
+      <uri>model://roscon-slide-31</uri>
+    </include>
+
+    <include>
+      <name>roscon-slide-32</name>
+      <pose>
+        642.1928494726753
+        649.9634533798035
+        420.0707030149804
+        0
+        0
+        -0.24444331080469306
+      </pose>
+      <uri>model://roscon-slide-32</uri>
+    </include>
+
+    <include>
+      <name>roscon-slide-33</name>
+      <pose>
+        642.1928494726753
+        649.9634533798035
+        420.0707030149804
+        0
+        0
+        -0.24444331080469306
+      </pose>
+      <uri>model://roscon-slide-33</uri>
+    </include>
+
+    <include>
+      <name>roscon-slide-34</name>
+      <pose>
         -473.5748575576047
         405.58715379724595
         278.40537728335096
@@ -1377,11 +1621,11 @@ ros2 topic echo /gazebo_ros_gps_sensor/node/out
         0
         -2.8032966892640965
       </pose>
-      <uri>model://roscon-slide-30</uri>
+      <uri>model://roscon-slide-34</uri>
     </include>
 
     <include>
-      <name>roscon-slide-31</name>
+      <name>roscon-slide-35</name>
       <pose>
         -577.95524348239
         -347.98939676056966
@@ -1390,11 +1634,11 @@ ros2 topic echo /gazebo_ros_gps_sensor/node/out
         0
         -1.1646783259607798
       </pose>
-      <uri>model://roscon-slide-31</uri>
+      <uri>model://roscon-slide-35</uri>
     </include>
 
     <include>
-      <name>roscon-slide-32</name>
+      <name>roscon-slide-36</name>
       <pose>
         -449.5713015419551
         100.11364847261098
@@ -1403,11 +1647,11 @@ ros2 topic echo /gazebo_ros_gps_sensor/node/out
         0
         2.9442795649913824
       </pose>
-      <uri>model://roscon-slide-32</uri>
+      <uri>model://roscon-slide-36</uri>
     </include>
 
     <include>
-      <name>roscon-slide-33</name>
+      <name>roscon-slide-37</name>
       <pose>
         -449.5713015419551
         100.11364847261098
@@ -1416,11 +1660,11 @@ ros2 topic echo /gazebo_ros_gps_sensor/node/out
         0
         2.9442795649913824
       </pose>
-      <uri>model://roscon-slide-33</uri>
+      <uri>model://roscon-slide-37</uri>
     </include>
 
     <include>
-      <name>roscon-slide-34</name>
+      <name>roscon-slide-38</name>
       <pose>
         178.8654398585336
         920.0259297191844
@@ -1429,11 +1673,11 @@ ros2 topic echo /gazebo_ros_gps_sensor/node/out
         0
         1.7539225582250975
       </pose>
-      <uri>model://roscon-slide-34</uri>
+      <uri>model://roscon-slide-38</uri>
     </include>
 
     <include>
-      <name>roscon-slide-35</name>
+      <name>roscon-slide-39</name>
       <pose>
         477.0356857090277
         -622.354166921547
@@ -1442,7 +1686,7 @@ ros2 topic echo /gazebo_ros_gps_sensor/node/out
         0
         -0.24981913046026705
       </pose>
-      <uri>model://roscon-slide-35</uri>
+      <uri>model://roscon-slide-39</uri>
     </include>
 
   </world>

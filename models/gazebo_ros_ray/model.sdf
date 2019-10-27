@@ -1,0 +1,24 @@
+<?xml version='1.0'?>
+<sdf version='1.6'>
+<model name='gazebo_ros_ray'>
+  <static>1</static>
+  <link name='link'>
+    <pose frame=''>0 0 0.45 0 -0 0</pose>
+    <visual name='visual'>
+      <transparency>1</transparency>
+      <geometry>
+        <box>
+          <size>1.6 0.001 0.9</size>
+        </box>
+      </geometry>
+      <material>
+        <script>
+          <uri>model://gazebo_ros_ray/materials/scripts</uri>
+          <uri>model://gazebo_ros_ray/materials/textures</uri>
+          <name>Slides/gazebo_ros_ray</name>
+        </script>
+      </material>
+    </visual>
+  </link>
+</model>
+</sdf>
