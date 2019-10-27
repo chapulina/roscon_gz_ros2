@@ -115,7 +115,7 @@ ros2 run rqt_image_view rqt_image_view /gazebo_ros_camera/camera/image_raw
 
 <pre style="color: #222255; font-family: monospace">
 <<sensor type="camera" name="camera">>
-  <<update_rate>>60<</update_rate>>
+  <<update_rate>>5<</update_rate>>
   <<visualize>>true<</visualize>>
   <<camera name="camera">>
     <<horizontal_fov>>0.927295218<</horizontal_fov>>
@@ -552,6 +552,51 @@ ros2 topic echo /gazebo_ros_imu_sensor/node/out
 </pre>
 '/>
 
+        <keyframe type='cam_pose' pose='-1460.583984 1120.468506 -35.112858 0 -0.164001 -1.844003'
+            text='<h2>Gazebo ROS bumper plugin demo</h2>
+
+<h3>Try for example</h3>
+
+<p style="color: #222255; font-family: monospace">
+ros2 topic echo /gazebo_ros_bumper/bumper_states
+</p>
+
+<h3>Sensor SDF</h3>
+
+<pre style="color: #222255; font-family: monospace">
+<<sensor type="contact" name="bumper">>
+  <<update_rate>>5<</update_rate>>
+  <<contact>>
+    <<collision>>collision<</collision>>
+  <</contact>>
+  <<plugin name="node" filename="libgazebo_ros_bumper.so">>
+    <<ros>>
+      <<namespace>>/gazebo_ros_bumper<</namespace>>
+    <</ros>>
+    <<frame_name>>world<</frame_name>>
+  <</plugin>>
+<</sensor>>
+</pre>
+'/>
+
+        <keyframe type='cam_pose' pose='-1458.999878 1093.669312 -35.929043 0 -0.211833 2.372457'
+            text='<h2>Gazebo ROS ray plugin demo</h2>
+
+<h3>Try for example</h3>
+
+<p style="color: #222255; font-family: monospace">
+ros2 run rviz2 rviz2
+</p>
+
+Add the topic <b>/gazebo_ros_ray/node/out</b> and change the
+fixed frame to <b>ray_link</b>.
+
+<h3>Sensor SDF</h3>
+
+<pre style="color: #222255; font-family: monospace">
+</pre>
+'/>
+
       </plugin>
 
       <plugin name='keyboard' filename='libKeyboardGUIPlugin.so'>
@@ -655,7 +700,7 @@ ros2 topic echo /gazebo_ros_imu_sensor/node/out
       <static>true</static>
       <link name="link">
         <sensor type="camera" name="camera">
-          <update_rate>60</update_rate>
+          <update_rate>5</update_rate>
           <visualize>true</visualize>
           <camera name="camera">
             <horizontal_fov>0.927295218</horizontal_fov>
@@ -1046,6 +1091,12 @@ ros2 topic echo /gazebo_ros_imu_sensor/node/out
 
     </model>
 
+    <include>
+      <name>gazebo_ros_bumper</name>
+      <pose>-1460.38 1116.94 -34.86 -0.269597 0.020047 -0.11</pose>
+      <uri>model://gazebo_ros_bumper</uri>
+    </include>
+
     <model name="ball">
       <pose>
         -1467 1105 -30.5 0 0 0
@@ -1092,6 +1143,59 @@ ros2 topic echo /gazebo_ros_imu_sensor/node/out
             </mesh>
           </geometry>
         </visual>
+        <sensor type="contact" name="bumper">
+          <update_rate>5</update_rate>
+          <contact>
+            <collision>collision</collision>
+          </contact>
+          <plugin name="node" filename="libgazebo_ros_bumper.so">
+            <ros>
+              <namespace>/gazebo_ros_bumper</namespace>
+            </ros>
+            <frame_name>world</frame_name>
+          </plugin>
+        </sensor>
+      </link>
+    </model>
+
+    <include>
+      <name>gazebo_ros_ray</name>
+      <pose>-1461.602295 1094.847900 -35.691643 -0.0189 -0.028 0.85</pose>
+      <uri>model://gazebo_ros_ray</uri>
+    </include>
+
+    <!-- TODO: ray is looking all crazy -->
+    <model name="ray">
+      <pose>
+        -1471.141724 1105.001465 -28.713987 1.569737 0.721532 0
+      </pose>
+      <static>true</static>
+      <link name="ray_link">
+        <sensor name="ray" type="gpu_ray">
+          <visualize>true</visualize>
+          <always_on>true</always_on>
+          <update_rate>60</update_rate>
+          <ray>
+            <scan>
+              <horizontal>
+                <samples>60</samples>
+                <resolution>1.0</resolution>
+                <min_angle>-0.5236</min_angle>
+                <max_angle>0.5236</max_angle>
+              </horizontal>
+            </scan>
+            <range>
+              <min>0.25</min>
+              <max>10.0</max>
+            </range>
+          </ray>
+          <plugin name="node" filename="libgazebo_ros_ray_sensor.so">
+            <ros>
+              <namespace>/gazebo_ros_ray</namespace>
+            </ros>
+            <output_type>sensor_msgs/LaserScan</output_type>
+          </plugin>
+        </sensor>
       </link>
     </model>
 
