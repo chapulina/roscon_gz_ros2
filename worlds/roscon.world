@@ -1,6 +1,22 @@
 <?xml version="1.0" ?>
 <sdf version="1.4">
+
+<!-- TODO
+
+* Add more plugins (4/14)
+* Update all plugin signs
+* Update all SDF snippets
+
+-->
+
   <world name="default">
+    <spherical_coordinates>
+        <!-- currently gazebo has a bug: instead of outputing lat, long, altitude in ENU
+        (x = East, y = North and z = Up) as the default configurations, it's outputting (-E)(-N)U,
+        therefore we rotate the default frame 180 so that it would go back to ENU -->
+        <heading_deg>180</heading_deg>
+    </spherical_coordinates>
+
     <gui>
 
      <camera name="user_camera">
@@ -73,328 +89,330 @@
         <keyframe type='lookat' number='29'/>
 
         <keyframe type='cam_pose' pose='645.22 129.59 190.3 0 -0.05 -2.92'
-            text='Check camera info:
+            text='<h2>Gazebo ROS camera plugin demo</h2>
 
-ros2 topic echo /camera/camera_info
+<h3>Check camera info</h3>
 
-Check camera images:
+<p style="color: #222255; font-family: monospace">
+ros2 topic echo /gazebo_ros_camera/camera/camera_info
+</p>
 
-ros2 run rqt_image_view rqt_image_view /camera/image_raw
+<h3>Check camera images</h3>
 
-Model SDF:
+<p style="color: #222255; font-family: monospace">
+ros2 run rqt_image_view rqt_image_view /gazebo_ros_camera/camera/image_raw
+</p>
 
-<model name="camera">
-  <static>true</static>
-  <link name="barrel">
-    <sensor type="camera" name="camera">
-      <update_rate>60</update_rate>
-      <visualize>true</visualize>
-      <camera name="camera">
-        <horizontal_fov>0.927295218</horizontal_fov>
-        <image>
-          <width>640</width>
-          <height>480</height>
-          <format>R8G8B8</format>
-        </image>
-        <clip>
-          <near>0.02</near>
-          <far>300</far>
-        </clip>
-        <distortion>
-          <k1>-0.1</k1>
-          <k2>-0.1</k2>
-          <p1>0</p1>
-          <p2>0</p2>
-          <k3>-0.1</k3>
-          <center>0.5 0.5</center>
-        </distortion>
-      </camera>
-      <plugin name="camera_controller" filename="libgazebo_ros_camera.so">
-        <border_crop>false</border_crop>
-      </plugin>
-    </sensor>
-  </link>
-</model>
+<h3>Sensor SDF</h3>
+
+<pre style="color: #222255; font-family: monospace">
+<<sensor type="camera" name="camera">>
+  <<update_rate>>60<</update_rate>>
+  <<visualize>>true<</visualize>>
+  <<camera name="camera">>
+    <<horizontal_fov>>0.927295218<</horizontal_fov>>
+    <<image>>
+      <<width>>640<</width>>
+      <<height>>480<</height>>
+      <<format>>R8G8B8<</format>>
+    <</image>>
+    <<clip>>
+      <<near>>0.02<</near>>
+      <<far>>300<</far>>
+    <</clip>>
+    <<distortion>>
+      <<k1>>-0.1<</k1>>
+      <<k2>>-0.1<</k2>>
+      <<p1>>0<</p1>>
+      <<p2>>0<</p2>>
+      <<k3>>-0.1<</k3>>
+      <<center>>0.5 0.5<</center>>
+    <</distortion>>
+  <</camera>>
+  <<plugin name="camera_controller" filename="libgazebo_ros_camera.so">>
+    <<border_crop>>false<</border_crop>>
+  <</plugin>>
+<</sensor>>
+</pre>
 '/>
 
         <keyframe type='cam_pose' pose='-1445.999 1108.47 -14.77 0 0.89 -1.644'
-            text='Gazebo ROS differential drive plugin demo
+            text='<h2>Gazebo ROS differential drive plugin demo</h2>
 
-Try sending commands:
+<h3>Try sending commands</h3>
 
-  ros2 topic pub /demo/cmd_demo geometry_msgs/Twist "{linear: {x: 1.0}}" -1
+<p style="color: #222255; font-family: monospace">
+ros2 topic pub /gazebo_ros_diff_drive/cmd_vel geometry_msgs/Twist "{linear: {x: 1.0}}" -1
+</p>
 
-  ros2 topic pub /demo/cmd_demo geometry_msgs/Twist "{angular: {z: 0.1}}" -1
+<p style="color: #222255; font-family: monospace">
+ros2 topic pub /gazebo_ros_diff_drive/cmd_vel geometry_msgs/Twist "{angular: {z: 0.1}}" -1
+</p>
 
-Try listening to odometry:
+<h3>Try listening to odometry</h3>
 
-  ros2 topic echo /demo/odom_demo
+<p style="color: #222255; font-family: monospace">
+ros2 topic echo /gazebo_ros_diff_drive/odom
+</p>
 
-Try listening to TF:
+<h3>Try listening to TF</h3>
 
-  ros2 run tf2_ros tf2_echo odom_demo chassis
+<p style="color: #222255; font-family: monospace">
+ros2 run tf2_ros tf2_echo odom chassis
+</p>
 
-  ros2 run tf2_ros tf2_echo chassis right_wheel
+<p style="color: #222255; font-family: monospace">
+ros2 run tf2_ros tf2_echo chassis right_wheel
+</p>
 
-  ros2 run tf2_ros tf2_echo chassis left_wheel
+<p style="color: #222255; font-family: monospace">
+ros2 run tf2_ros tf2_echo chassis left_wheel
+</p>
 
-Model SDF:
+<h3>Model SDF</h3>
 
-<model name="vehicle">
+<pre style="color: #222255; font-family: monospace">
+<<model name="vehicle">>
 
-  <link name="chassis">
-    <pose>-0.151427 -0 0.175 0 -0 0</pose>
-    <inertial>
-      <mass>1.14395</mass>
-      <inertia>
-        <ixx>0.126164</ixx>
-        <ixy>0</ixy>
-        <ixz>0</ixz>
-        <iyy>0.416519</iyy>
-        <iyz>0</iyz>
-        <izz>0.481014</izz>
-      </inertia>
-    </inertial>
-    <visual name="visual">
-      <geometry>
-        <box>
-          <size>2.01142 1 0.568726</size>
-        </box>
-      </geometry>
-    </visual>
-    <collision name="collision">
-      <geometry>
-        <box>
-          <size>2.01142 1 0.568726</size>
-        </box>
-      </geometry>
-    </collision>
-  </link>
+  <<link name="chassis">>
+    <<pose>>-0.151427 -0 0.175 0 -0 0<</pose>>
+    <<inertial>>
+      <<mass>>1.14395<</mass>>
+      <<inertia>>
+        <<ixx>>0.126164<</ixx>>
+        <<ixy>>0<</ixy>>
+        <<ixz>>0<</ixz>>
+        <<iyy>>0.416519<</iyy>>
+        <<iyz>>0<</iyz>>
+        <<izz>>0.481014<</izz>>
+      <</inertia>>
+    <</inertial>>
+    <<visual name="visual">>
+      <<geometry>>
+        <<box>>
+          <<size>>2.01142 1 0.568726<</size>>
+        <</box>>
+      <</geometry>>
+    <</visual>>
+    <<collision name="collision">>
+      <<geometry>>
+        <<box>>
+          <<size>>2.01142 1 0.568726<</size>>
+        <</box>>
+      <</geometry>>
+    <</collision>>
+  <</link>>
 
-  <link name="left_wheel">
-    <pose>0.554283 0.625029 -0.025 -1.5707 0 0</pose>
-    <inertial>
-      <mass>2</mass>
-      <inertia>
-        <ixx>0.145833</ixx>
-        <ixy>0</ixy>
-        <ixz>0</ixz>
-        <iyy>0.145833</iyy>
-        <iyz>0</iyz>
-        <izz>0.125</izz>
-      </inertia>
-    </inertial>
-    <visual name="visual">
-      <geometry>
-        <sphere>
-          <radius>0.3</radius>
-        </sphere>
-      </geometry>
-    </visual>
-    <collision name="collision">
-      <geometry>
-        <sphere>
-          <radius>0.3</radius>
-        </sphere>
-      </geometry>
-      <surface>
-        <friction>
-          <ode>
-            <mu>1</mu>
-            <mu2>1</mu2>
-            <slip1>0</slip1>
-            <slip2>0</slip2>
-          </ode>
-        </friction>
-        <contact>
-          <ode>
-            <soft_cfm>0</soft_cfm>
-            <soft_erp>0.2</soft_erp>
-            <kp>1e+13</kp>
-            <kd>1</kd>
-            <max_vel>0.01</max_vel>
-            <min_depth>0.01</min_depth>
-          </ode>
-        </contact>
-      </surface>
-    </collision>
-  </link>
+  <<link name="left_wheel">>
+    <<pose>>0.554283 0.625029 -0.025 -1.5707 0 0<</pose>>
+    <<inertial>>
+      <<mass>>2<</mass>>
+      <<inertia>>
+        <<ixx>>0.145833<</ixx>>
+        <<ixy>>0<</ixy>>
+        <<ixz>>0<</ixz>>
+        <<iyy>>0.145833<</iyy>>
+        <<iyz>>0<</iyz>>
+        <<izz>>0.125<</izz>>
+      <</inertia>>
+    <</inertial>>
+    <<visual name="visual">>
+      <<geometry>>
+        <<sphere>>
+          <<radius>>0.3<</radius>>
+        <</sphere>>
+      <</geometry>>
+    <</visual>>
+    <<collision name="collision">>
+      <<geometry>>
+        <<sphere>>
+          <<radius>>0.3<</radius>>
+        <</sphere>>
+      <</geometry>>
+      <<surface>>
+        <<friction>>
+          <<ode>>
+            <<mu>>1<</mu>>
+            <<mu2>>1<</mu2>>
+            <<slip1>>0<</slip1>>
+            <<slip2>>0<</slip2>>
+          <</ode>>
+        <</friction>>
+        <<contact>>
+          <<ode>>
+            <<soft_cfm>>0<</soft_cfm>>
+            <<soft_erp>>0.2<</soft_erp>>
+            <<kp>>1e+13<</kp>>
+            <<kd>>1<</kd>>
+            <<max_vel>>0.01<</max_vel>>
+            <<min_depth>>0.01<</min_depth>>
+          <</ode>>
+        <</contact>>
+      <</surface>>
+    <</collision>>
+  <</link>>
 
-  <link name="right_wheel">
-    <pose>0.554282 -0.625029 -0.025 -1.5707 0 0</pose>
-    <inertial>
-      <mass>2</mass>
-      <inertia>
-        <ixx>0.145833</ixx>
-        <ixy>0</ixy>
-        <ixz>0</ixz>
-        <iyy>0.145833</iyy>
-        <iyz>0</iyz>
-        <izz>0.125</izz>
-      </inertia>
-    </inertial>
-    <visual name="visual">
-      <geometry>
-        <sphere>
-          <radius>0.3</radius>
-        </sphere>
-      </geometry>
-    </visual>
-    <collision name="collision">
-      <geometry>
-        <sphere>
-          <radius>0.3</radius>
-        </sphere>
-      </geometry>
-      <surface>
-        <friction>
-          <ode>
-            <mu>1</mu>
-            <mu2>1</mu2>
-            <slip1>0</slip1>
-            <slip2>0</slip2>
-          </ode>
-        </friction>
-        <contact>
-          <ode>
-            <soft_cfm>0</soft_cfm>
-            <soft_erp>0.2</soft_erp>
-            <kp>1e+13</kp>
-            <kd>1</kd>
-            <max_vel>0.01</max_vel>
-            <min_depth>0.01</min_depth>
-          </ode>
-        </contact>
-      </surface>
-    </collision>
-  </link>
+  <<link name="right_wheel">>
+    <<pose>>0.554282 -0.625029 -0.025 -1.5707 0 0<</pose>>
+    <<inertial>>
+      <<mass>>2<</mass>>
+      <<inertia>>
+        <<ixx>>0.145833<</ixx>>
+        <<ixy>>0<</ixy>>
+        <<ixz>>0<</ixz>>
+        <<iyy>>0.145833<</iyy>>
+        <<iyz>>0<</iyz>>
+        <<izz>>0.125<</izz>>
+      <</inertia>>
+    <</inertial>>
+    <<visual name="visual">>
+      <<geometry>>
+        <<sphere>>
+          <<radius>>0.3<</radius>>
+        <</sphere>>
+      <</geometry>>
+    <</visual>>
+    <<collision name="collision">>
+      <<geometry>>
+        <<sphere>>
+          <<radius>>0.3<</radius>>
+        <</sphere>>
+      <</geometry>>
+      <<surface>>
+        <<friction>>
+          <<ode>>
+            <<mu>>1<</mu>>
+            <<mu2>>1<</mu2>>
+            <<slip1>>0<</slip1>>
+            <<slip2>>0<</slip2>>
+          <</ode>>
+        <</friction>>
+        <<contact>>
+          <<ode>>
+            <<soft_cfm>>0<</soft_cfm>>
+            <<soft_erp>>0.2<</soft_erp>>
+            <<kp>>1e+13<</kp>>
+            <<kd>>1<</kd>>
+            <<max_vel>>0.01<</max_vel>>
+            <<min_depth>>0.01<</min_depth>>
+          <</ode>>
+        <</contact>>
+      <</surface>>
+    <</collision>>
+  <</link>>
 
-  <link name="caster">
-    <pose>-0.957138 -0 -0.125 0 -0 0</pose>
-    <inertial>
-      <mass>1</mass>
-      <inertia>
-        <ixx>0.1</ixx>
-        <ixy>0</ixy>
-        <ixz>0</ixz>
-        <iyy>0.1</iyy>
-        <iyz>0</iyz>
-        <izz>0.1</izz>
-      </inertia>
-    </inertial>
-    <visual name="visual">
-      <geometry>
-        <sphere>
-          <radius>0.2</radius>
-        </sphere>
-      </geometry>
-    </visual>
-    <collision name="collision">
-      <geometry>
-        <sphere>
-          <radius>0.2</radius>
-        </sphere>
-      </geometry>
-    </collision>
-  </link>
+  <<link name="caster">>
+    <<pose>>-0.957138 -0 -0.125 0 -0 0<</pose>>
+    <<inertial>>
+      <<mass>>1<</mass>>
+      <<inertia>>
+        <<ixx>>0.1<</ixx>>
+        <<ixy>>0<</ixy>>
+        <<ixz>>0<</ixz>>
+        <<iyy>>0.1<</iyy>>
+        <<iyz>>0<</iyz>>
+        <<izz>>0.1<</izz>>
+      <</inertia>>
+    <</inertial>>
+    <<visual name="visual">>
+      <<geometry>>
+        <<sphere>>
+          <<radius>>0.2<</radius>>
+        <</sphere>>
+      <</geometry>>
+    <</visual>>
+    <<collision name="collision">>
+      <<geometry>>
+        <<sphere>>
+          <<radius>>0.2<</radius>>
+        <</sphere>>
+      <</geometry>>
+    <</collision>>
+  <</link>>
 
-  <joint name="left_wheel_joint" type="revolute">
-    <parent>chassis</parent>
-    <child>left_wheel</child>
-    <axis>
-      <xyz>0 0 1</xyz>
-      <limit>
-        <lower>-1.79769e+308</lower>
-        <upper>1.79769e+308</upper>
-      </limit>
-    </axis>
-  </joint>
+  <<joint name="left_wheel_joint" type="revolute">>
+    <<parent>>chassis<</parent>>
+    <<child>>left_wheel<</child>>
+    <<axis>>
+      <<xyz>>0 0 1<</xyz>>
+      <<limit>>
+        <<lower>>-1.79769e+308<</lower>>
+        <<upper>>1.79769e+308<</upper>>
+      <</limit>>
+    <</axis>>
+  <</joint>>
 
-  <joint name="right_wheel_joint" type="revolute">
-    <parent>chassis</parent>
-    <child>right_wheel</child>
-    <axis>
-      <xyz>0 0 1</xyz>
-      <limit>
-        <lower>-1.79769e+308</lower>
-        <upper>1.79769e+308</upper>
-      </limit>
-    </axis>
-  </joint>
+  <<joint name="right_wheel_joint" type="revolute">>
+    <<parent>>chassis<</parent>>
+    <<child>>right_wheel<</child>>
+    <<axis>>
+      <<xyz>>0 0 1<</xyz>>
+      <<limit>>
+        <<lower>>-1.79769e+308<</lower>>
+        <<upper>>1.79769e+308<</upper>>
+      <</limit>>
+    <</axis>>
+  <</joint>>
 
-  <joint name="caster_wheel" type="ball">
-    <parent>chassis</parent>
-    <child>caster</child>
-  </joint>
+  <<joint name="caster_wheel" type="ball">>
+    <<parent>>chassis<</parent>>
+    <<child>>caster<</child>>
+  <</joint>>
 
-  <plugin name="diff_drive" filename="libgazebo_ros_diff_drive.so">
+  <<plugin name="diff_drive" filename="libgazebo_ros_diff_drive.so">>
 
-    <ros>
-      <namespace>/demo</namespace>
-      <argument>cmd_vel:=cmd_demo</argument>
-      <argument>odom:=odom_demo</argument>
-    </ros>
+    <<ros>>
+      <<namespace>>/demo<</namespace>>
+    <</ros>>
 
-    <!-- wheels -->
-    <left_joint>left_wheel_joint</left_joint>
-    <right_joint>right_wheel_joint</right_joint>
+    <<!-- wheels -->>
+    <<left_joint>>left_wheel_joint<</left_joint>>
+    <<right_joint>>right_wheel_joint<</right_joint>>
 
-    <!-- kinematics -->
-    <wheel_separation>1.25</wheel_separation>
-    <wheel_diameter>0.6</wheel_diameter>
+    <<!-- kinematics -->>
+    <<wheel_separation>>1.25<</wheel_separation>>
+    <<wheel_diameter>>0.6<</wheel_diameter>>
 
-    <!-- limits -->
-    <max_wheel_torque>20</max_wheel_torque>
-    <max_wheel_acceleration>1.0</max_wheel_acceleration>
+    <<!-- limits -->>
+    <<max_wheel_torque>>20<</max_wheel_torque>>
+    <<max_wheel_acceleration>>1.0<</max_wheel_acceleration>>
 
-    <!-- output -->
-    <publish_odom>true</publish_odom>
-    <publish_odom_tf>true</publish_odom_tf>
-    <publish_wheel_tf>true</publish_wheel_tf>
+    <<!-- output -->>
+    <<publish_odom>>true<</publish_odom>>
+    <<publish_odom_tf>>true<</publish_odom_tf>>
+    <<publish_wheel_tf>>true<</publish_wheel_tf>>
 
-    <odometry_frame>odom_demo</odometry_frame>
-    <robot_base_frame>chassis</robot_base_frame>
+    <<robot_base_frame>>chassis<</robot_base_frame>>
 
-  </plugin>
+  <</plugin>>
 
-</model>
+<</model>>
+</pre>
 '/>
 
         <keyframe type='cam_pose' pose='-2038.547119 1229.816650 302.064453 0 0.852 1.407999'
-            text='Gazebo ROS video plugin demo
+            text='<h2>Gazebo ROS video plugin demo</h2>
 
-The visual on top of the box is displaying the images coming from a camera.
+The visual on top of the box is displaying the images coming from a ROS 2 image topic.
 
-Model SDF:
+<h3>Visual SDF</h3>
 
-<model name="video">
-  <static>true</static>
-  <pose>-2039 1233 300 0 0 1.2</pose>
-  <link name="base_link">
-    <visual name="visual">
-      <geometry>
-        <box>
-          <size>0.5 0.5 0.5</size>
-        </box>
-      </geometry>
-      <plugin name="display_video_controller" filename="libgazebo_ros_video.so">
-        <ros>
-          <argument>~/image_raw:=/camera/image_raw</argument>
-        </ros>
-        <height>120</height>
-        <width>160</width>
-      </plugin>
-    </visual>
-    <collision name="collision">
-      <geometry>
-        <box>
-          <size>0.5 0.5 0.5</size>
-        </box>
-      </geometry>
-      <laser_retro>100.0</laser_retro>
-    </collision>
-  </link>
-</model>
+<pre style="color: #222255; font-family: monospace">
+<<visual name="visual">>
+  <<geometry>>
+    <<box>>
+      <<size>>0.5 0.5 0.5<</size>>
+    <</box>>
+  <</geometry>>
+  <<plugin name="display_video_controller" filename="libgazebo_ros_video.so">>
+    <<ros>>
+      <<argument>>~/image_raw:=/camera/image_raw<</argument>>
+    <</ros>>
+    <<height>>120<</height>>
+    <<width>>160<</width>>
+  <</plugin>>
+<</visual>>
+</pre>
 '/>
 
         <keyframe type='lookat' number='30'/>
@@ -408,6 +426,57 @@ Model SDF:
         <keyframe type='lookat' number='34'/>
 
         <keyframe type='lookat' number='35'/>
+
+<!-- Presentation end -->
+
+        <keyframe type='cam_pose' pose='-1440.999 1108.47 -14.77 0 0.89 -1.644'
+            text='<h2>Gazebo ROS GPS plugin demo</h2>
+
+<h3>Try for example</h3>
+
+<p style="color: #222255; font-family: monospace">
+ros2 topic echo /gazebo_ros_gps_sensor/node/out
+</p>
+
+<h3>Sensor SDF</h3>
+
+<pre style="color: #222255; font-family: monospace">
+<<sensor name="vehicle_gps" type="gps">>
+  <<always_on>>true<</always_on>>
+  <<update_rate>>5<</update_rate>>
+  <<gps>>
+    <<position_sensing>>
+      <<horizontal>>
+        <<noise type="gaussian">>
+          <<mean>>0.0<</mean>>
+          <<stddev>>2e-4<</stddev>>
+        <</noise>>
+      <</horizontal>>
+      <<vertical>>
+        <<noise type="gaussian">>
+          <<mean>>0.0<</mean>>
+          <<stddev>>2e-4<</stddev>>
+        <</noise>>
+      <</vertical>>
+    <</position_sensing>>
+  <</gps>>
+  <<plugin name="ros_publisher" filename="libgazebo_ros_gps_sensor.so">>
+    <<ros>>
+      <<namespace>>/gps<</namespace>>
+      <<argument>>~/out:=data<</argument>>
+    <</ros>>
+  <</plugin>>
+<</sensor>>
+</pre>
+
+<h3>Spherical coordinates</h3>
+
+<pre style="color: #222255; font-family: monospace">
+<spherical_coordinates>
+    <heading_deg>180</heading_deg>
+</spherical_coordinates>
+</pre>
+'/>
 
       </plugin>
 
@@ -467,9 +536,8 @@ Model SDF:
       </link>
     </model>
 
-    <!-- gazebo_ros_camera -->
     <include>
-      <name>sign-0</name>
+      <name>gazebo_ros_camera</name>
       <pose>642.5 129.79 190 0 -0.04 -2.49</pose>
       <uri>model://sign-0</uri>
     </include>
@@ -535,7 +603,8 @@ Model SDF:
               <center>0.5 0.5</center>
             </distortion>
           </camera>
-          <plugin name="ros_publisher" filename="libgazebo_ros_camera.so">
+          <plugin name="node" filename="libgazebo_ros_camera.so">
+            <namespace>/gazebo_ros_camera</namespace>
             <border_crop>true</border_crop>
           </plugin>
         </sensor>
@@ -577,10 +646,15 @@ Model SDF:
 
     </model>
 
-    <!-- gazebo_ros_diff_drive -->
     <include>
-      <name>sign-1</name>
+      <name>gazebo_ros_diff_drive</name>
       <pose>-1445.46 1107.2 -16.98 0.805 -0.167 0.12</pose>
+      <uri>model://sign-1</uri>
+    </include>
+
+    <include>
+      <name>gazebo_ros_gps</name>
+      <pose>-1440.46 1107.2 -16.98 0.805 -0.167 0.12</pose>
       <uri>model://sign-1</uri>
     </include>
 
@@ -616,10 +690,35 @@ Model SDF:
             </box>
           </geometry>
         </collision>
+        <sensor name="vehicle_gps" type="gps">
+          <always_on>true</always_on>
+          <update_rate>5</update_rate>
+          <gps>
+            <position_sensing>
+              <horizontal>
+                <noise type="gaussian">
+                  <mean>0.0</mean>
+                  <stddev>2e-4</stddev>
+                </noise>
+              </horizontal>
+              <vertical>
+                <noise type="gaussian">
+                  <mean>0.0</mean>
+                  <stddev>2e-4</stddev>
+                </noise>
+              </vertical>
+            </position_sensing>
+          </gps>
+          <plugin name="node" filename="libgazebo_ros_gps_sensor.so">
+            <ros>
+              <namespace>/gazebo_ros_gps_sensor</namespace>
+            </ros>
+          </plugin>
+        </sensor>
       </link>
 
       <link name='left_wheel'>
-        <pose>0.554283 0.625029 -0.025 -1.5707 0 0</pose>
+        <pose>0.554283 0.625029 -0.025 0 0 0</pose>
         <inertial>
           <mass>2</mass>
           <inertia>
@@ -668,7 +767,7 @@ Model SDF:
       </link>
 
       <link name='right_wheel'>
-        <pose>0.554282 -0.625029 -0.025 -1.5707 0 0</pose>
+        <pose>0.554282 -0.625029 -0.025 0 0 0</pose>
         <inertial>
           <mass>2</mass>
           <inertia>
@@ -749,7 +848,7 @@ Model SDF:
         <parent>chassis</parent>
         <child>left_wheel</child>
         <axis>
-          <xyz>0 0 1</xyz>
+          <xyz>0 1 0</xyz>
           <limit>
             <lower>-1.79769e+308</lower>
             <upper>1.79769e+308</upper>
@@ -761,7 +860,7 @@ Model SDF:
         <parent>chassis</parent>
         <child>right_wheel</child>
         <axis>
-          <xyz>0 0 1</xyz>
+          <xyz>0 1 0</xyz>
           <limit>
             <lower>-1.79769e+308</lower>
             <upper>1.79769e+308</upper>
@@ -774,12 +873,10 @@ Model SDF:
         <child>caster</child>
       </joint>
 
-      <plugin name='diff_drive' filename='libgazebo_ros_diff_drive.so'>
+      <plugin name='node' filename='libgazebo_ros_diff_drive.so'>
 
         <ros>
-          <namespace>/demo</namespace>
-          <argument>cmd_vel:=cmd_demo</argument>
-          <argument>odom:=odom_demo</argument>
+          <namespace>/gazebo_ros_diff_drive</namespace>
         </ros>
 
         <!-- wheels -->
@@ -799,17 +896,15 @@ Model SDF:
         <publish_odom_tf>true</publish_odom_tf>
         <publish_wheel_tf>true</publish_wheel_tf>
 
-        <odometry_frame>odom_demo</odometry_frame>
+        <odometry_frame>odom</odometry_frame>
         <robot_base_frame>chassis</robot_base_frame>
 
       </plugin>
 
     </model>
 
-    <!-- TODO: fix sign -->
-    <!-- gazebo_ros_video -->
     <include>
-      <name>sign-2</name>
+      <name>gazebo_ros_video</name>
       <pose>-2038.749634 1231.889771 299.570740 -0.4624 0 0.41</pose>
       <uri>model://sign-2</uri>
     </include>
@@ -824,9 +919,10 @@ Model SDF:
               <size>0.5 0.5 0.5</size>
             </box>
           </geometry>
-          <plugin name="display_video_controller" filename="libgazebo_ros_video.so">
+          <plugin name="node" filename="libgazebo_ros_video.so">
             <ros>
-              <argument>~/image_raw:=/camera/image_raw</argument>
+              <namespace>/gazebo_ros_video</namespace>
+              <argument>~/image_raw:=/gazebo_ros_camera/camera/image_raw</argument>
             </ros>
             <height>120</height>
             <width>160</width>
