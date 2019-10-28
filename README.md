@@ -57,8 +57,8 @@ Plugin | Slide
 `gazebo_ros_joint_state_publisher` | 48
 `gazebo_ros_joint_pose_trajectory` | 49
 `gazebo_ros_projector` | 50
-`gazebo_ros_hand_of_god` |
-`gazebo_ros_planar_move` |
+`gazebo_ros_planar_move` | 51
+`gazebo_ros_hand_of_god` | 52
 `gazebo_ros_vacuum_gripper` |
 
 ## Performance

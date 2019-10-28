@@ -658,6 +658,40 @@ ros2 topic pub /gazebo_ros_projector/switch std_msgs/msg/Bool "data: false" -1
 </pre>
 '/>
 
+        <keyframe type='cam_pose' pose='-1417.999390 1077.527222 -30.443043 0 0.217999 -2.552000'
+            text='<h2>Gazebo ROS planar move plugin demo</h2>
+
+<h3>Try for example</h3>
+
+<p style="color: #222255; font-family: monospace">
+ros2 topic pub /gazebo_ros_planar_move/cmd_vel geometry_msgs/Twist "{angular: {z: 0.3}}" -1
+</p>
+
+<h3>Model SDF</h3>
+
+<pre style="color: #222255; font-family: monospace">
+</pre>
+'/>
+
+        <keyframe type='cam_pose' pose='-1458.130371 1069.920898 -33.339748 0 0.13 -2.38'
+            text='<h2>Gazebo ROS hand of god plugin demo</h2>
+
+<h3>Try for example</h3>
+
+<p style="color: #222255; font-family: monospace">
+ros2 run tf2_ros static_transform_publisher -1467 1065 -35 0 0 1 world link1_desired
+</p>
+
+<p style="color: #222255; font-family: monospace">
+ros2 run tf2_ros tf2_echo world link1_actual
+</p>
+
+<h3>Model SDF</h3>
+
+<pre style="color: #222255; font-family: monospace">
+</pre>
+'/>
+
       </plugin>
 
       <plugin name='keyboard' filename='libKeyboardGUIPlugin.so'>
@@ -1162,6 +1196,174 @@ ros2 topic pub /gazebo_ros_projector/switch std_msgs/msg/Bool "data: false" -1
         </ros>
         <link_name>chassis</link_name>
         <force_frame>world</force_frame>
+      </plugin>
+
+    </model>
+
+    <include>
+      <name>gazebo_ros_planar_move</name>
+      <pose>
+        -1421.900879 1076.761719 -31.565561 0.103134 0 -1.009239
+      </pose>
+      <uri>model://gazebo_ros_planar_move</uri>
+    </include>
+
+    <model name="box_to_move">
+      <pose>
+        -1431 1067 -36 0 0 0
+      </pose>
+      <link name="link">
+        <collision name="collision">
+          <geometry>
+            <box>
+              <size>1 1 1</size>
+            </box>
+          </geometry>
+        </collision>
+        <visual name="visual">
+          <geometry>
+            <box>
+              <size>1 1 1</size>
+            </box>
+          </geometry>
+        </visual>
+      </link>
+
+      <plugin name='node' filename='libgazebo_ros_planar_move.so'>
+        <ros>
+          <namespace>/gazebo_ros_planar_move</namespace>
+        </ros>
+
+        <update_rate>50</update_rate>
+      </plugin>
+    </model>
+
+    <include>
+      <name>gazebo_ros_hand_of_god</name>
+      <pose>
+        -1459.442261 1067.954834 -34.122284 0 0 -0.544932
+      </pose>
+      <uri>model://gazebo_ros_hand_of_god</uri>
+    </include>
+
+    <model name="chain">
+      <pose>
+        -1467.102783 1065.219604 -36.000000 0 0 0
+      </pose>
+      <link name="canonical">
+      </link>
+      <link name="link1">
+        <pose>0 0 0 -1.5708 0 0</pose>
+        <inertial>
+          <pose>0 0 0.5 0 0 0</pose>
+        </inertial>
+        <visual name="visual">
+          <pose>0 0 0.5 0 0 0</pose>
+          <geometry>
+            <cylinder>
+              <radius>0.1</radius>
+              <length>1.0</length>
+            </cylinder>
+          </geometry>
+          <material>
+            <script>
+              <uri>file://media/materials/scripts/gazebo.material</uri>
+              <name>Gazebo/Yellow</name>
+            </script>
+          </material>
+        </visual>
+        <collision name="collision">
+          <pose>0 0 0.5 0 0 0</pose>
+          <geometry>
+            <cylinder>
+              <radius>0.1</radius>
+              <length>1.0</length>
+            </cylinder>
+          </geometry>
+        </collision>
+      </link>
+      <link name="link2">
+        <pose>0 0.9 0 -1.57 0 0</pose>
+        <self_collide>0</self_collide>
+        <inertial>
+          <pose>0 0 0.5 0 0 0</pose>
+        </inertial>
+        <visual name="visual">
+          <pose>0 0 0.5 0 0 0</pose>
+          <geometry>
+            <cylinder>
+              <radius>0.1</radius>
+              <length>1.0</length>
+            </cylinder>
+          </geometry>
+          <material>
+            <script>
+              <uri>file://media/materials/scripts/gazebo.material</uri>
+              <name>Gazebo/Green</name>
+            </script>
+          </material>
+        </visual>
+        <collision name="collision">
+          <pose>0 0 0.5 0 0 0</pose>
+          <geometry>
+            <cylinder>
+              <radius>0.1</radius>
+              <length>1.0</length>
+            </cylinder>
+          </geometry>
+        </collision>
+      </link>
+      <link name="link3">
+        <pose>0 1.8 0 -1.57 0 0</pose>
+        <self_collide>0</self_collide>
+        <inertial>
+          <pose>0 0 0.5 0 0 0</pose>
+        </inertial>
+        <visual name="visual">
+          <pose>0 0 0.5 0 0 0</pose>
+          <geometry>
+            <cylinder>
+              <radius>0.1</radius>
+              <length>1.0</length>
+            </cylinder>
+          </geometry>
+          <material>
+            <script>
+              <uri>file://media/materials/scripts/gazebo.material</uri>
+              <name>Gazebo/Blue</name>
+            </script>
+          </material>
+        </visual>
+        <collision name="collision">
+          <pose>0 0 0.5 0 0 0</pose>
+          <geometry>
+            <cylinder>
+              <radius>0.1</radius>
+              <length>1.0</length>
+            </cylinder>
+          </geometry>
+        </collision>
+      </link>
+      <joint name="joint1" type="revolute">
+        <parent>link1</parent>
+        <child>link2</child>
+        <axis>
+          <xyz>1.0 0 0</xyz>
+        </axis>
+      </joint>
+      <joint name="joint2" type="revolute">
+        <parent>link2</parent>
+        <child>link3</child>
+        <axis>
+          <xyz>1.0 0 0</xyz>
+        </axis>
+      </joint>
+      <plugin name="node" filename="libgazebo_ros_hand_of_god.so">
+        <ros>
+          <namespace>/gazebo_ros_hand_of_god</namespace>
+        </ros>
+        <link_name>link1</link_name>
+        <frame_id>link1</frame_id>
       </plugin>
 
     </model>
