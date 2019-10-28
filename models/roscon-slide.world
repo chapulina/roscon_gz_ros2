@@ -101,6 +101,14 @@
         <pose>110 0 0 0 0 0</pose>
         <uri>model://roscon-slide-11</uri>
       </include><include>
+        <name>roscon-slide-11_bis</name>
+        <pose>120 0 0 0 0 0</pose>
+        <uri>model://roscon-slide-11-bis</uri>
+      </include><include>
+        <name>roscon-slide-11_bis2</name>
+        <pose>120 0 0 0 0 0</pose>
+        <uri>model://roscon-slide-11-bis2</uri>
+      </include><include>
         <name>roscon-slide-12</name>
         <pose>120 0 0 0 0 0</pose>
         <uri>model://roscon-slide-12</uri>
