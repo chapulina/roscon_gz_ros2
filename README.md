@@ -51,15 +51,15 @@ Plugin | Slide
 `gazebo_ros_video` | 36
 `gazebo_ros_gps_sensor` | 43
 `gazebo_ros_imu_sensor` | 44
-`gazebo_ros_bumper` | 45
-`gazebo_ros_ray` | 46
-`gazebo_ros_joint_state_publisher` | 47
-`gazebo_ros_joint_pose_trajectory` | 48
-`gazebo_ros_force` |
+`gazebo_ros_force` | 45
+`gazebo_ros_bumper` | 46
+`gazebo_ros_ray` | 47
+`gazebo_ros_joint_state_publisher` | 48
+`gazebo_ros_joint_pose_trajectory` | 49
+`gazebo_ros_projector` | 50
 `gazebo_ros_hand_of_god` |
 `gazebo_ros_planar_move` |
 `gazebo_ros_vacuum_gripper` |
-`gazebo_ros_projector` |
 
 ## Performance
 
@@ -75,5 +75,5 @@ If that's the case, you can try:
 
 * Lowering the resolution of your monitor :smile:
 
-* Comment out the heightmap from the SDF file :grimmacing:
+* Comment out the heightmap from the SDF file :grimacing:
 

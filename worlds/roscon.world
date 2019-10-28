@@ -551,6 +551,21 @@ ros2 topic echo /gazebo_ros_imu_sensor/node/out
 </pre>
 '/>
 
+        <keyframe type='cam_pose' pose='-1430.209229 1108.427246 -15.219577 0 0.736000 -2.108001'
+            text='<h2>Gazebo ROS force plugin demo</h2>
+
+<h3>Try for example</h3>
+
+<p style="color: #222255; font-family: monospace">
+ros2 topic pub -1 /gazebo_ros_force/gazebo_ros_force geometry_msgs/Wrench "force: {x: 10.0, z: 100.0}"
+</p>
+
+<h3>Model SDF</h3>
+
+<pre style="color: #222255; font-family: monospace">
+</pre>
+'/>
+
         <keyframe type='cam_pose' pose='-1460.583984 1120.468506 -35.112858 0 -0.164001 -1.844003'
             text='<h2>Gazebo ROS bumper plugin demo</h2>
 
@@ -618,6 +633,23 @@ ros2 topic echo /gazebo_ros_joint_state_publisher/joint_states
 
 <p style="color: #222255; font-family: monospace">
 ros2 topic pub /gazebo_ros_joint_pose_trajectory/set_joint_trajectory trajectory_msgs/msg/JointTrajectory "{header: {frame_id: world}, joint_names: {upper_joint}, points: [{positions: {0, 0.1, 0.2, 0.3, 0.4, 0.5}}]}"
+</p>
+
+<h3>Model SDF</h3>
+
+<pre style="color: #222255; font-family: monospace">
+</pre>
+'/>
+
+        <keyframe type='cam_pose' pose='5.95337 -5.07052 4.47829 0 0.432748 2.25139'
+            text='<h2>Gazebo ROS projector plugin demo</h2>
+
+<h3>Try for example</h3>
+
+Turn it off:
+
+<p style="color: #222255; font-family: monospace">
+ros2 topic pub /gazebo_ros_projector/switch std_msgs/msg/Bool "data: false" -1
 </p>
 
 <h3>Model SDF</h3>
@@ -822,6 +854,12 @@ ros2 topic pub /gazebo_ros_joint_pose_trajectory/set_joint_trajectory trajectory
       <name>gazebo_ros_imu_sensor</name>
       <pose>-1435.45 1107.1999 -16.98 0.805 -0.167 -0.139</pose>
       <uri>model://gazebo_ros_imu_sensor</uri>
+    </include>
+
+    <include>
+      <name>gazebo_ros_force</name>
+      <pose>-1430.45 1107.1999 -16.98 0.805 -0.167 -0.139</pose>
+      <uri>model://gazebo_ros_force</uri>
     </include>
 
     <model name='vehicle'>
@@ -1118,6 +1156,14 @@ ros2 topic pub /gazebo_ros_joint_pose_trajectory/set_joint_trajectory trajectory
 
       </plugin>
 
+      <plugin name="force_node" filename="libgazebo_ros_force.so">
+        <ros>
+          <namespace>/gazebo_ros_force</namespace>
+        </ros>
+        <link_name>chassis</link_name>
+        <force_frame>world</force_frame>
+      </plugin>
+
     </model>
 
     <include>
@@ -1381,6 +1427,59 @@ ros2 topic pub /gazebo_ros_joint_pose_trajectory/set_joint_trajectory trajectory
         </ros>
         <update_rate>50</update_rate>
       </plugin>
+    </model>
+
+
+    <model name="projector_model">
+      <pose>-1.326927 -0.038119 1.261517 1.570796 0 -0.551969</pose>
+      <static>true</static>
+      <link name="projector_link">
+        <collision name="collision">
+          <geometry>
+            <sphere>
+              <radius>0.1</radius>
+            </sphere>
+          </geometry>
+        </collision>
+        <visual name="visual">
+          <geometry>
+            <sphere>
+              <radius>0.1</radius>
+            </sphere>
+          </geometry>
+          <material>
+            <script>Gazebo/Grey</script>
+          </material>
+        </visual>
+        <projector name="texture_projector">
+          <pose>0 0 0 0 0 0</pose>
+          <texture>gazebo_ros_projector/materials/textures/gazebo_ros_projector.png</texture>
+          <fov>0.959931088597</fov>
+          <near_clip>0.1</near_clip>
+          <far_clip>10</far_clip>
+        </projector>
+      </link>
+      <plugin name="node" filename="libgazebo_ros_projector.so">
+        <ros>
+          <namespace>/gazebo_ros_projector</namespace>
+        </ros>
+        <projector_link>projector_link</projector_link>
+        <projector_name>texture_projector</projector_name>
+      </plugin>
+    </model>
+
+    <model name='projectee'>
+      <static>true</static>
+      <pose>1.04 2.9 1.49 0 0 -0.288</pose>
+      <link name='link'>
+        <visual name='visual'>
+          <geometry>
+            <box>
+              <size>6.4 0.01 5</size>
+            </box>
+          </geometry>
+        </visual>
+      </link>
     </model>
 
     <!-- slides -->
