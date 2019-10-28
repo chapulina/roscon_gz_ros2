@@ -1,6 +1,6 @@
 <?xml version='1.0'?>
 <sdf version='1.6'>
-<model name='roscon-slide-11-bis2'>
+<model name='roscon-slide-111'>
   <static>1</static>
   <link name='link'>
     <pose frame=''>0 0 0.45 0 -0 0</pose>
@@ -14,9 +14,9 @@
       </geometry>
       <material>
         <script>
-          <uri>model://roscon-slide-11-bis2/materials/scripts</uri>
-          <uri>model://roscon-slide-11-bis2/materials/textures</uri>
-          <name>Slides/roscon-slide_11_bis2</name>
+          <uri>model://roscon-slide-111/materials/scripts</uri>
+          <uri>model://roscon-slide-111/materials/textures</uri>
+          <name>Slides/roscon-slide_111</name>
         </script>
       </material>
     </visual>

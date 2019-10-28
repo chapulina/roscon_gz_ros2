@@ -1,4 +1,4 @@
-material Slides/roscon-slide_11_bis
+material Slides/roscon-slide_111
         {
           receive_shadows off
           technique
@@ -10,7 +10,7 @@ material Slides/roscon-slide_11_bis
               depth_check on
               texture_unit
               {
-                texture roscon-slide-11-bis.png
+                texture roscon-slide-111.png
                 filtering anistropic
                 max_anisotropy 16
               }

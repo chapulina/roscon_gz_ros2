@@ -52,6 +52,10 @@
 
         <keyframe type='stack' number='11'/>
 
+        <keyframe type='stack' number='111'/>
+
+        <keyframe type='stack' number='112'/>
+
         <keyframe type='stack' number='12'/>
 
         <keyframe type='stack' number='13'/>
@@ -1842,7 +1846,7 @@ ros2 run tf2_ros tf2_echo world link1_actual
     </include>
 
     <include>
-      <name>roscon-slide-11_bis</name>
+      <name>roscon-slide-111</name>
       <pose>
         -963.0727111628037
         793.564496990706
@@ -1857,11 +1861,11 @@ ros2 run tf2_ros tf2_echo world link1_actual
         0
         -0.5119488473838469-->
       </pose>
-      <uri>model://roscon-slide-11-bis</uri>
+      <uri>model://roscon-slide-111</uri>
     </include>
 
     <include>
-      <name>roscon-slide-11_bis2</name>
+      <name>roscon-slide-112</name>
       <pose>
         -963.0727111628037
         793.564496990706
@@ -1876,7 +1880,7 @@ ros2 run tf2_ros tf2_echo world link1_actual
         0
         -0.5119488473838469-->
       </pose>
-      <uri>model://roscon-slide-11-bis2</uri>
+      <uri>model://roscon-slide-112</uri>
     </include>
 
     <include>

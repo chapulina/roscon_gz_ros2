@@ -16,6 +16,8 @@
         <keyframe type='lookat' number='9'/>
         <keyframe type='lookat' number='10'/>
         <keyframe type='lookat' number='11'/>
+        <keyframe type='lookat' number='111'/>
+        <keyframe type='lookat' number='112'/>
         <keyframe type='lookat' number='12'/>
         <keyframe type='lookat' number='13'/>
         <keyframe type='lookat' number='14'/>
@@ -101,13 +103,13 @@
         <pose>110 0 0 0 0 0</pose>
         <uri>model://roscon-slide-11</uri>
       </include><include>
-        <name>roscon-slide-11_bis</name>
+        <name>roscon-slide-111</name>
         <pose>120 0 0 0 0 0</pose>
-        <uri>model://roscon-slide-11-bis</uri>
+        <uri>model://roscon-slide-111</uri>
       </include><include>
-        <name>roscon-slide-11_bis2</name>
+        <name>roscon-slide-112</name>
         <pose>120 0 0 0 0 0</pose>
-        <uri>model://roscon-slide-11-bis2</uri>
+        <uri>model://roscon-slide-112</uri>
       </include><include>
         <name>roscon-slide-12</name>
         <pose>120 0 0 0 0 0</pose>
