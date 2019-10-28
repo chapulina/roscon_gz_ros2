@@ -1640,6 +1640,44 @@ ros2 topic pub /gazebo_ros_projector/switch std_msgs/msg/Bool "data: false" -1
     </include>
 
     <include>
+      <name>roscon-slide-11_bis</name>
+      <pose>
+        -963.0727111628037
+        793.564496990706
+        448.74954854257084
+        0
+        0
+        0.5043479672068263
+        <!---105.7659881325859
+        -16.909491218630478
+        223.94041971649898
+        0
+        0
+        -0.5119488473838469-->
+      </pose>
+      <uri>model://roscon-slide-11-bis</uri>
+    </include>
+
+    <include>
+      <name>roscon-slide-11_bis2</name>
+      <pose>
+        -963.0727111628037
+        793.564496990706
+        448.74954854257084
+        0
+        0
+        0.5043479672068263
+        <!---105.7659881325859
+        -16.909491218630478
+        223.94041971649898
+        0
+        0
+        -0.5119488473838469-->
+      </pose>
+      <uri>model://roscon-slide-11-bis2</uri>
+    </include>
+
+    <include>
       <name>roscon-slide-12</name>
       <pose>
         -963.0727111628037
