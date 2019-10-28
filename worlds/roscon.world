@@ -181,7 +181,6 @@ ros2 run tf2_ros tf2_echo chassis left_wheel
 
 <pre style="color: #222255; font-family: monospace">
 <<model name="vehicle">>
-
   <<link name="chassis">>
     <<pose>>-0.151427 -0 0.175 0 -0 0<</pose>>
     <<inertial>>
@@ -592,6 +591,36 @@ Add the topic <b>/gazebo_ros_ray/node/out</b> and change the
 fixed frame to <b>ray_link</b>.
 
 <h3>Sensor SDF</h3>
+
+<pre style="color: #222255; font-family: monospace">
+</pre>
+'/>
+
+        <keyframe type='cam_pose' pose='736.288 691.55 484.16 0 0.047 -2.59'
+            text='<h2>Gazebo ROS joint state publisher plugin demo</h2>
+
+<h3>Try for example</h3>
+
+<p style="color: #222255; font-family: monospace">
+ros2 topic echo /gazebo_ros_joint_state_publisher/joint_states
+</p>
+
+<h3>Model SDF</h3>
+
+<pre style="color: #222255; font-family: monospace">
+</pre>
+'/>
+
+        <keyframe type='cam_pose' pose='738.563599 681.777771 484.139069 0 -0.040999 2.729186'
+            text='<h2>Gazebo ROS joint pose trajectory plugin demo</h2>
+
+<h3>Try for example</h3>
+
+<p style="color: #222255; font-family: monospace">
+ros2 topic pub /gazebo_ros_joint_pose_trajectory/set_joint_trajectory trajectory_msgs/msg/JointTrajectory "{header: {frame_id: world}, joint_names: {upper_joint}, points: [{positions: {0, 0.1, 0.2, 0.3, 0.4, 0.5}}]}"
+</p>
+
+<h3>Model SDF</h3>
 
 <pre style="color: #222255; font-family: monospace">
 </pre>
@@ -1235,6 +1264,124 @@ fixed frame to <b>ray_link</b>.
       </link>
     </model>
 
+    <include>
+      <name>gazebo_ros_joint_state_publisher</name>
+      <pose>
+        732.3853848385847
+        690.5387774356643
+        483.3511135114346
+        0
+        0
+        -1.3926539623175542
+      </pose>
+      <uri>model://gazebo_ros_joint_state_publisher</uri>
+    </include>
+
+    <include>
+      <name>gazebo_ros_joint_pose_trajectory</name>
+      <pose>
+        735.5
+        682.16
+        483.69
+        0
+        0
+        -1.956
+      </pose>
+      <uri>model://gazebo_ros_joint_pose_trajectory</uri>
+    </include>
+
+    <model name="pendulum">
+      <pose>
+        732.69
+        687.57
+        484.66
+        0
+        0
+        0
+      </pose>
+      <link name="canonical">
+      </link>
+      <link name="upper_link">
+        <pose>0 0 0 -1.5708 0 0</pose>
+        <inertial>
+          <pose>0 0 0.5 0 0 0</pose>
+        </inertial>
+        <visual name="vis_cylinder">
+          <pose>0 0 0.5 0 0 0</pose>
+          <geometry>
+            <cylinder>
+              <radius>0.1</radius>
+              <length>0.9</length>
+            </cylinder>
+          </geometry>
+          <material>
+            <script>
+              <uri>file://media/materials/scripts/gazebo.material</uri>
+              <name>Gazebo/Yellow</name>
+            </script>
+          </material>
+        </visual>
+      </link>
+      <link name="lower_link">
+        <pose>0.2 0.9 0 -2 0 0</pose>
+        <self_collide>0</self_collide>
+        <inertial>
+          <pose>0 0 0.45 0 0 0</pose>
+        </inertial>
+        <visual name="vis_cylinder">
+          <pose>0 0 0.45 0 0 0</pose>
+          <geometry>
+            <cylinder>
+              <radius>0.1</radius>
+              <length>0.9</length>
+            </cylinder>
+          </geometry>
+          <material>
+            <script>
+              <uri>file://media/materials/scripts/gazebo.material</uri>
+              <name>Gazebo/Green</name>
+            </script>
+          </material>
+        </visual>
+      </link>
+      <joint name="world_joint" type="fixed">
+        <parent>world</parent>
+        <child>canonical</child>
+        <axis>
+          <xyz>1.0 0 0</xyz>
+        </axis>
+      </joint>
+      <joint name="upper_joint" type="revolute">
+        <parent>canonical</parent>
+        <child>upper_link</child>
+        <axis>
+          <xyz>1.0 0 0</xyz>
+        </axis>
+      </joint>
+      <joint name="lower_joint" type="revolute">
+        <parent>upper_link</parent>
+        <child>lower_link</child>
+        <axis>
+          <xyz>1.0 0 0</xyz>
+        </axis>
+      </joint>
+      <plugin name="publisher"
+          filename="libgazebo_ros_joint_state_publisher.so">
+        <ros>
+          <namespace>/gazebo_ros_joint_state_publisher</namespace>
+        </ros>
+        <update_rate>1</update_rate>
+        <joint_name>upper_joint</joint_name>
+        <joint_name>lower_joint</joint_name>
+      </plugin>
+      <plugin name="controller"
+          filename="libgazebo_ros_joint_pose_trajectory.so">
+        <ros>
+          <namespace>/gazebo_ros_joint_pose_trajectory</namespace>
+        </ros>
+        <update_rate>50</update_rate>
+      </plugin>
+    </model>
 
     <!-- slides -->
 
@@ -1575,12 +1722,6 @@ fixed frame to <b>ray_link</b>.
         0
         0
         0.8275339250516129
-        <!--732.3853848385847
-        690.5387774356643
-        483.3511135114346
-        0
-        0
-        -1.3926539623175542-->
       </pose>
       <uri>model://roscon-slide-23</uri>
     </include>

@@ -33,3 +33,47 @@ ROSCon 2019 presentation by Louise Poubel (@chapulina) and Jose Luis Rivero (@jr
         . ~/ws/install/setup.sh
         ros2 launch roscon_gz_ros2 roscon.launch.py verbose:=true
 
+Press the play button on the top, or `F5` to start the presentation.
+
+## Demos
+
+This presentation / simulation contains demos of 14 different plugins from the
+`gazebo_plugins` package. Each demo has its own slide. Click on the arrow to
+open a dialog with information about the plugin.
+
+You can also skip directly to the demos by typing the slide number on the top
+box:
+
+Plugin | Slide
+-- | --
+`gazebo_ros_camera` | 34
+`gazebo_ros_diff_drive` | 35
+`gazebo_ros_video` | 36
+`gazebo_ros_gps_sensor` | 43
+`gazebo_ros_imu_sensor` | 44
+`gazebo_ros_bumper` | 45
+`gazebo_ros_ray` | 46
+`gazebo_ros_joint_state_publisher` | 47
+`gazebo_ros_joint_pose_trajectory` | 48
+`gazebo_ros_force` |
+`gazebo_ros_hand_of_god` |
+`gazebo_ros_planar_move` |
+`gazebo_ros_vacuum_gripper` |
+`gazebo_ros_projector` |
+
+## Performance
+
+If the simulation is laggy, it's probably the large heightmap causing low FPS.
+If that's the case, you can try:
+
+* Setting the heightmap level of detail on `~/.gazebo/gui.ini`:
+
+    ~~~
+    [heightmap]
+    lod=3
+    ~~~
+
+* Lowering the resolution of your monitor :smile:
+
+* Comment out the heightmap from the SDF file :grimmacing:
+
