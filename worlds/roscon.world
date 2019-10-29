@@ -3,8 +3,7 @@
 
 <!-- TODO
 
-* Add more plugins (4/14)
-* Update all plugin signs
+* Add more plugins (13/14)
 * Update all SDF snippets
 
 -->
@@ -50,17 +49,17 @@
 
         <keyframe type='lookat' number='10'/>
 
-        <keyframe type='stack' number='11'/>
+        <keyframe type='stack' number='110'/>
 
         <keyframe type='stack' number='111'/>
 
-        <keyframe type='stack' number='112'/>
+        <keyframe type='stack' number='120'/>
 
-        <keyframe type='stack' number='12'/>
+        <keyframe type='stack' number='121'/>
 
-        <keyframe type='stack' number='13'/>
+        <keyframe type='stack' number='122'/>
 
-        <keyframe type='stack' number='14'/>
+        <keyframe type='stack' number='123'/>
 
         <keyframe type='lookat' number='15'/>
 
@@ -1833,7 +1832,7 @@ ros2 run tf2_ros tf2_echo world link1_actual
     </include>
 
     <include>
-      <name>roscon-slide-11</name>
+      <name>roscon-slide-110</name>
       <pose>
         -963.0727111628037
         793.564496990706
@@ -1865,14 +1864,14 @@ ros2 run tf2_ros tf2_echo world link1_actual
     </include>
 
     <include>
-      <name>roscon-slide-112</name>
+      <name>roscon-slide-120</name>
       <pose>
-        -963.0727111628037
-        793.564496990706
-        448.74954854257084
+        559.8477836860952
+        345.59255963237
+        193.29410261537714
         0
         0
-        0.5043479672068263
+        -1.0651857368099833
         <!---105.7659881325859
         -16.909491218630478
         223.94041971649898
@@ -1884,14 +1883,14 @@ ros2 run tf2_ros tf2_echo world link1_actual
     </include>
 
     <include>
-      <name>roscon-slide-12</name>
+      <name>roscon-slide-121</name>
       <pose>
-        -963.0727111628037
-        793.564496990706
-        448.74954854257084
+        559.8477836860952
+        345.59255963237
+        193.29410261537714
         0
         0
-        0.5043479672068263
+        -1.0651857368099833
         <!---105.7659881325859
         -16.909491218630478
         223.94041971649898
@@ -1903,7 +1902,7 @@ ros2 run tf2_ros tf2_echo world link1_actual
     </include>
 
     <include>
-      <name>roscon-slide-13</name>
+      <name>roscon-slide-122</name>
       <pose>
         559.8477836860952
         345.59255963237
@@ -1916,7 +1915,7 @@ ros2 run tf2_ros tf2_echo world link1_actual
     </include>
 
     <include>
-      <name>roscon-slide-14</name>
+      <name>roscon-slide-123</name>
       <pose>
         559.8477836860952
         345.59255963237
