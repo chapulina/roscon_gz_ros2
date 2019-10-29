@@ -695,6 +695,25 @@ ros2 run tf2_ros tf2_echo world link1_actual
 </pre>
 '/>
 
+        <keyframe type='cam_pose' pose='-759.972473 492.841339 -30.519588 0 0.01 0.8'
+            text='<h2>Gazebo ROS vacuum gripper plugin demo</h2>
+
+<h3>Try for example</h3>
+
+<p style="color: #222255; font-family: monospace">
+ros2 service call /gazebo_ros_vacuum_gripper/switch std_srvs/srv/SetBool "{data: True}"
+</p>
+
+<p style="color: #222255; font-family: monospace">
+ros2 topic echo /gazebo_ros_vacuum_gripper/grasping
+</p>
+
+<h3>Model SDF</h3>
+
+<pre style="color: #222255; font-family: monospace">
+</pre>
+'/>
+
       </plugin>
 
       <plugin name='keyboard' filename='libKeyboardGUIPlugin.so'>
@@ -828,9 +847,7 @@ ros2 run tf2_ros tf2_echo world link1_actual
       </link>
     </model>
 
-    <!-- ground station -->
-
-   <model name="ground">
+   <model name="ground_vehicle">
       <pose>
         -1452 1087 -37 0 0 0
       </pose>
@@ -853,10 +870,7 @@ ros2 run tf2_ros tf2_echo world link1_actual
         </visual>
         <collision name="collision">
           <geometry>
-            <plane>
-              <normal>0 0 1</normal>
-              <size>50 50</size>
-            </plane>
+            <box><size>50 50 0.001</size></box>
           </geometry>
           <surface>
             <bounce>
@@ -1686,6 +1700,136 @@ ros2 run tf2_ros tf2_echo world link1_actual
         </visual>
       </link>
     </model>
+
+    <include>
+      <name>gazebo_ros_vacuum_gripper</name>
+      <pose>
+        -758.465393 495.82 -31.1 0 0 -0.566874
+      </pose>
+      <uri>model://gazebo_ros_vacuum_gripper</uri>
+    </include>
+
+   <model name="ground_vacuum">
+      <pose>
+        -752 500 -32 0 0 0
+      </pose>
+
+      <static>true</static>
+      <link name="link">
+        <visual name="visual">
+          <geometry>
+            <plane>
+              <normal>0 0 1</normal>
+              <size>10 10</size>
+            </plane>
+          </geometry>
+          <material>
+            <script>
+              <uri>file://media/materials/scripts/gazebo.material</uri>
+              <name>Gazebo/Residential</name>
+            </script>
+          </material>
+        </visual>
+        <collision name="collision">
+          <geometry>
+            <box><size>10 10 0.001</size></box>
+          </geometry>
+          <surface>
+            <bounce>
+              <restitution_coefficient>1.0</restitution_coefficient>
+              <threshold>0</threshold>
+            </bounce>
+            <contact>
+              <ode>
+                <max_vel>10000</max_vel>
+                <min_depth>0.001</min_depth>
+              </ode>
+            </contact>
+          </surface>
+        </collision>
+      </link>
+
+    </model>
+
+    <model name='vacuum_gripper'>
+      <static>true</static>
+      <pose>
+        -752 500 -30 0 0 0
+      </pose>
+      <link name="link">
+        <collision name="collision">
+          <geometry>
+            <cylinder>
+              <radius>0.3</radius>
+              <length>1</length>
+            </cylinder>
+          </geometry>
+        </collision>
+        <visual name="visual">
+          <geometry>
+            <cylinder>
+              <radius>0.3</radius>
+              <length>1</length>
+            </cylinder>
+          </geometry>
+          <material>
+            <script>
+              <uri>file://media/materials/scripts/gazebo.material</uri>
+              <name>Gazebo/Orange</name>
+            </script>
+          </material>
+        </visual>
+      </link>
+
+      <plugin name='node' filename='libgazebo_ros_vacuum_gripper.so'>
+
+        <ros>
+          <namespace>/gazebo_ros_vacuum_gripper</namespace>
+        </ros>
+
+        <link_name>link</link_name>
+
+        <max_distance>2.0</max_distance>
+
+        <fixed>ground</fixed>
+
+      </plugin>
+    </model>
+
+    <model name='vacuum_grippee'>
+      <pose>
+        -752 500 -31 0 0 0
+      </pose>
+      <link name="link1">
+        <inertial>
+          <mass>0.026</mass>
+          <inertia>
+            <ixx>1.664e-5</ixx>
+            <iyy>1.664e-5</iyy>
+            <izz>1.664e-5</izz>
+            <ixy>0</ixy>
+            <ixz>0</ixz>
+            <iyz>0</iyz>
+          </inertia>
+        </inertial>
+        <collision name="collision">
+          <geometry>
+            <sphere>
+              <radius>0.08</radius>
+            </sphere>
+          </geometry>
+        </collision>
+        <visual name="visual">
+          <geometry>
+            <sphere>
+              <radius>0.08</radius>
+            </sphere>
+          </geometry>
+        </visual>
+      </link>
+    </model>
+
+
 
     <!-- slides -->
 
