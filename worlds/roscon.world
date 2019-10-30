@@ -58,8 +58,6 @@
 
         <keyframe type='stack' number='122'/>
 
-        <keyframe type='stack' number='123'/>
-
         <keyframe type='lookat' number='15'/>
 
         <keyframe type='lookat' number='16'/>
@@ -613,6 +611,21 @@ fixed frame to <b>ray_link</b>.
 </pre>
 '/>
 
+        <keyframe type='cam_pose' pose='1663.378662 1643.339600 29.441582 0 0.464001 2.652001'
+            text='<h2>Gazebo ROS planar move plugin demo</h2>
+
+<h3>Try for example</h3>
+
+<p style="color: #222255; font-family: monospace">
+ros2 topic pub /gazebo_ros_planar_move/cmd_vel geometry_msgs/Twist "{angular: {z: 0.3}}" -1
+</p>
+
+<h3>Model SDF</h3>
+
+<pre style="color: #222255; font-family: monospace">
+</pre>
+'/>
+
         <keyframe type='cam_pose' pose='736.288 691.55 484.16 0 0.047 -2.59'
             text='<h2>Gazebo ROS joint state publisher plugin demo</h2>
 
@@ -660,28 +673,13 @@ ros2 topic pub /gazebo_ros_projector/switch std_msgs/msg/Bool "data: false" -1
 </pre>
 '/>
 
-        <keyframe type='cam_pose' pose='1663.378662 1643.339600 29.441582 0 0.464001 2.652001'
-            text='<h2>Gazebo ROS planar move plugin demo</h2>
-
-<h3>Try for example</h3>
-
-<p style="color: #222255; font-family: monospace">
-ros2 topic pub /gazebo_ros_planar_move/cmd_vel geometry_msgs/Twist "{angular: {z: 0.3}}" -1
-</p>
-
-<h3>Model SDF</h3>
-
-<pre style="color: #222255; font-family: monospace">
-</pre>
-'/>
-
-        <keyframe type='cam_pose' pose='-1458.130371 1069.920898 -33.339748 0 0.13 -2.38'
+        <keyframe type='cam_pose' pose='2510.590820 963.620850 1423.213379 0 0.339667 -2.876979'
             text='<h2>Gazebo ROS hand of god plugin demo</h2>
 
 <h3>Try for example</h3>
 
 <p style="color: #222255; font-family: monospace">
-ros2 run tf2_ros static_transform_publisher -1467 1065 -35 0 0 1 world link1_desired
+ros2 run tf2_ros static_transform_publisher 2497 954.6 1418 1 0 0 0 world link1_desired
 </p>
 
 <p style="color: #222255; font-family: monospace">
@@ -1384,14 +1382,56 @@ ros2 topic echo /gazebo_ros_vacuum_gripper/grasping
     <include>
       <name>gazebo_ros_hand_of_god</name>
       <pose>
-        -1459.442261 1067.954834 -34.122284 0 0 -0.544932
+        2507.171143 963.978516 1422.220947 0.186024 -0.004400 -1.211285
       </pose>
       <uri>model://gazebo_ros_hand_of_god</uri>
     </include>
 
-    <model name="chain">
+   <model name="ground_of_god">
       <pose>
-        -1467.102783 1065.219604 -36.000000 0 0 0
+        2497.177002 954.631897 1414.988403 0 0 0
+      </pose>
+
+      <static>true</static>
+      <link name="link">
+        <visual name="visual">
+          <geometry>
+            <plane>
+              <normal>0 0 1</normal>
+              <size>7 7</size>
+            </plane>
+          </geometry>
+          <material>
+            <script>
+              <uri>file://media/materials/scripts/gazebo.material</uri>
+              <name>Gazebo/Residential</name>
+            </script>
+          </material>
+        </visual>
+        <collision name="collision">
+          <geometry>
+            <box><size>7 7 0.001</size></box>
+          </geometry>
+          <surface>
+            <bounce>
+              <restitution_coefficient>1.0</restitution_coefficient>
+              <threshold>0</threshold>
+            </bounce>
+            <contact>
+              <ode>
+                <max_vel>10000</max_vel>
+                <min_depth>0.001</min_depth>
+              </ode>
+            </contact>
+          </surface>
+        </collision>
+      </link>
+
+    </model>
+
+    <model name="chain_of_god">
+      <pose>
+        2497 954.6 1416 0 0 0
       </pose>
       <link name="canonical">
       </link>
@@ -1435,7 +1475,7 @@ ros2 topic echo /gazebo_ros_vacuum_gripper/grasping
           <pose>0 0 0.5 0 0 0</pose>
           <geometry>
             <cylinder>
-              <radius>0.1</radius>
+              <radius>0.09</radius>
               <length>1.0</length>
             </cylinder>
           </geometry>
@@ -1450,7 +1490,7 @@ ros2 topic echo /gazebo_ros_vacuum_gripper/grasping
           <pose>0 0 0.5 0 0 0</pose>
           <geometry>
             <cylinder>
-              <radius>0.1</radius>
+              <radius>0.09</radius>
               <length>1.0</length>
             </cylinder>
           </geometry>
@@ -1466,7 +1506,7 @@ ros2 topic echo /gazebo_ros_vacuum_gripper/grasping
           <pose>0 0 0.5 0 0 0</pose>
           <geometry>
             <cylinder>
-              <radius>0.1</radius>
+              <radius>0.08</radius>
               <length>1.0</length>
             </cylinder>
           </geometry>
@@ -1481,7 +1521,7 @@ ros2 topic echo /gazebo_ros_vacuum_gripper/grasping
           <pose>0 0 0.5 0 0 0</pose>
           <geometry>
             <cylinder>
-              <radius>0.1</radius>
+              <radius>0.08</radius>
               <length>1.0</length>
             </cylinder>
           </geometry>
@@ -2117,25 +2157,6 @@ ros2 topic echo /gazebo_ros_vacuum_gripper/grasping
         -1.0651857368099833
       </pose>
       <uri>model://roscon-slide-13</uri>
-    </include>
-
-    <include>
-      <name>roscon-slide-123</name>
-      <pose>
-        559.8477836860952
-        345.59255963237
-        193.29410261537714
-        0
-        0
-        -1.0651857368099833
-        <!--410.01034648538825
-        397.85696002103737
-        359.5466411214914
-        0
-        0
-        -0.925198698701974-->
-      </pose>
-      <uri>model://roscon-slide-14</uri>
     </include>
 
     <include>

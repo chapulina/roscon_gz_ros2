@@ -46,20 +46,20 @@ box:
 
 Plugin | Slide
 -- | --
-`gazebo_ros_camera` | 36
-`gazebo_ros_diff_drive` | 37
-`gazebo_ros_video` | 38
-`gazebo_ros_gps_sensor` | 45
-`gazebo_ros_imu_sensor` | 46
-`gazebo_ros_force` | 47
-`gazebo_ros_bumper` | 48
-`gazebo_ros_ray` | 49
+`gazebo_ros_camera` | 35
+`gazebo_ros_diff_drive` | 36
+`gazebo_ros_video` | 37
+`gazebo_ros_gps_sensor` | 44
+`gazebo_ros_imu_sensor` | 45
+`gazebo_ros_force` | 46
+`gazebo_ros_bumper` | 47
+`gazebo_ros_ray` | 48
+`gazebo_ros_planar_move` | 49
 `gazebo_ros_joint_state_publisher` | 50
 `gazebo_ros_joint_pose_trajectory` | 51
 `gazebo_ros_projector` | 52
-`gazebo_ros_planar_move` | 53
-`gazebo_ros_hand_of_god` | 54
-`gazebo_ros_vacuum_gripper` | 55
+`gazebo_ros_hand_of_god` | 53
+`gazebo_ros_vacuum_gripper` | 54
 
 ## Performance
 
