@@ -1,12 +1,6 @@
 <?xml version="1.0" ?>
 <sdf version="1.4">
 
-<!-- TODO
-
-* Update all SDF snippets
-
--->
-
   <world name="default">
     <spherical_coordinates>
         <!-- currently gazebo has a bug: instead of outputing lat, long, altitude in ENU
@@ -126,19 +120,20 @@ ros2 run rqt_image_view rqt_image_view /gazebo_ros_camera/camera/image_raw
     <</image>>
     <<clip>>
       <<near>>0.02<</near>>
-      <<far>>300<</far>>
+      <<far>>5000<</far>>
     <</clip>>
     <<distortion>>
-      <<k1>>-0.1<</k1>>
-      <<k2>>-0.1<</k2>>
+      <<k1>>-0.3<</k1>>
+      <<k2>>-0.3<</k2>>
       <<p1>>0<</p1>>
       <<p2>>0<</p2>>
-      <<k3>>-0.1<</k3>>
+      <<k3>>-0.3<</k3>>
       <<center>>0.5 0.5<</center>>
     <</distortion>>
   <</camera>>
-  <<plugin name="camera_controller" filename="libgazebo_ros_camera.so">>
-    <<border_crop>>false<</border_crop>>
+  <<plugin name="node" filename="libgazebo_ros_camera.so">>
+    <<namespace>>/gazebo_ros_camera<</namespace>>
+    <<border_crop>>true<</border_crop>>
   <</plugin>>
 <</sensor>>
 </pre>
@@ -147,7 +142,7 @@ ros2 run rqt_image_view rqt_image_view /gazebo_ros_camera/camera/image_raw
         <keyframe type='cam_pose' pose='-1445.999 1108.47 -14.77 0 0.89 -1.644'
             text='<h2>Gazebo ROS differential drive plugin demo</h2>
 
-<h3>Try sending commands</h3>
+<h3>Send commands</h3>
 
 <p style="color: #222255; font-family: monospace">
 ros2 topic pub /gazebo_ros_diff_drive/cmd_vel geometry_msgs/Twist "{linear: {x: 1.0}}" -1
@@ -157,13 +152,13 @@ ros2 topic pub /gazebo_ros_diff_drive/cmd_vel geometry_msgs/Twist "{linear: {x: 
 ros2 topic pub /gazebo_ros_diff_drive/cmd_vel geometry_msgs/Twist "{angular: {z: 0.1}}" -1
 </p>
 
-<h3>Try listening to odometry</h3>
+<h3>Listen to odometry</h3>
 
 <p style="color: #222255; font-family: monospace">
 ros2 topic echo /gazebo_ros_diff_drive/odom
 </p>
 
-<h3>Try listening to TF</h3>
+<h3>Listen to TF</h3>
 
 <p style="color: #222255; font-family: monospace">
 ros2 run tf2_ros tf2_echo odom chassis
@@ -208,10 +203,10 @@ ros2 run tf2_ros tf2_echo chassis left_wheel
         <</box>>
       <</geometry>>
     <</collision>>
+    <<!-- omitting sensors -->>
   <</link>>
-
   <<link name="left_wheel">>
-    <<pose>>0.554283 0.625029 -0.025 -1.5707 0 0<</pose>>
+    <<pose>>0.554283 0.625029 -0.025 0 0 0<</pose>>
     <<inertial>>
       <<mass>>2<</mass>>
       <<inertia>>
@@ -260,7 +255,7 @@ ros2 run tf2_ros tf2_echo chassis left_wheel
   <</link>>
 
   <<link name="right_wheel">>
-    <<pose>>0.554282 -0.625029 -0.025 -1.5707 0 0<</pose>>
+    <<pose>>0.554282 -0.625029 -0.025 0 0 0<</pose>>
     <<inertial>>
       <<mass>>2<</mass>>
       <<inertia>>
@@ -341,7 +336,7 @@ ros2 run tf2_ros tf2_echo chassis left_wheel
     <<parent>>chassis<</parent>>
     <<child>>left_wheel<</child>>
     <<axis>>
-      <<xyz>>0 0 1<</xyz>>
+      <<xyz>>0 1 0<</xyz>>
       <<limit>>
         <<lower>>-1.79769e+308<</lower>>
         <<upper>>1.79769e+308<</upper>>
@@ -353,7 +348,7 @@ ros2 run tf2_ros tf2_echo chassis left_wheel
     <<parent>>chassis<</parent>>
     <<child>>right_wheel<</child>>
     <<axis>>
-      <<xyz>>0 0 1<</xyz>>
+      <<xyz>>0 1 0<</xyz>>
       <<limit>>
         <<lower>>-1.79769e+308<</lower>>
         <<upper>>1.79769e+308<</upper>>
@@ -366,10 +361,10 @@ ros2 run tf2_ros tf2_echo chassis left_wheel
     <<child>>caster<</child>>
   <</joint>>
 
-  <<plugin name="diff_drive" filename="libgazebo_ros_diff_drive.so">>
+  <<plugin name="node" filename="libgazebo_ros_diff_drive.so">>
 
     <<ros>>
-      <<namespace>>/demo<</namespace>>
+      <<namespace>>/gazebo_ros_diff_drive<</namespace>>
     <</ros>>
 
     <<!-- wheels -->>
@@ -389,9 +384,12 @@ ros2 run tf2_ros tf2_echo chassis left_wheel
     <<publish_odom_tf>>true<</publish_odom_tf>>
     <<publish_wheel_tf>>true<</publish_wheel_tf>>
 
+    <<odometry_frame>>odom<</odometry_frame>>
     <<robot_base_frame>>chassis<</robot_base_frame>>
 
   <</plugin>>
+
+  <<!-- omitting other plugins -->>
 
 <</model>>
 </pre>
@@ -411,9 +409,10 @@ The visual on top of the box is displaying the images coming from a ROS 2 image 
       <<size>>0.5 0.5 0.5<</size>>
     <</box>>
   <</geometry>>
-  <<plugin name="display_video_controller" filename="libgazebo_ros_video.so">>
+  <<plugin name="node" filename="libgazebo_ros_video.so">>
     <<ros>>
-      <<argument>>~/image_raw:=/camera/image_raw<</argument>>
+      <<namespace>>/gazebo_ros_video<</namespace>>
+      <<argument>>~/image_raw:=/gazebo_ros_camera/camera/image_raw<</argument>>
     <</ros>>
     <<height>>120<</height>>
     <<width>>160<</width>>
@@ -439,7 +438,7 @@ The visual on top of the box is displaying the images coming from a ROS 2 image 
         <keyframe type='cam_pose' pose='-1440.999 1108.47 -14.77 0 0.89 -1.644'
             text='<h2>Gazebo ROS GPS plugin demo</h2>
 
-<h3>Try for example</h3>
+<h3>Listen to data</h3>
 
 <p style="color: #222255; font-family: monospace">
 ros2 topic echo /gazebo_ros_gps_sensor/node/out
@@ -467,10 +466,9 @@ ros2 topic echo /gazebo_ros_gps_sensor/node/out
       <</vertical>>
     <</position_sensing>>
   <</gps>>
-  <<plugin name="ros_publisher" filename="libgazebo_ros_gps_sensor.so">>
+  <<plugin name="node" filename="libgazebo_ros_gps_sensor.so">>
     <<ros>>
-      <<namespace>>/gps<</namespace>>
-      <<argument>>~/out:=data<</argument>>
+      <<namespace>>/gazebo_ros_gps_sensor<</namespace>>
     <</ros>>
   <</plugin>>
 <</sensor>>
@@ -488,7 +486,7 @@ ros2 topic echo /gazebo_ros_gps_sensor/node/out
         <keyframe type='cam_pose' pose='-1435.64 1108.94 -14.94 0 0.74 -1.988'
             text='<h2>Gazebo ROS IMU plugin demo</h2>
 
-<h3>Try for example</h3>
+<h3>Listen to data</h3>
 
 <p style="color: #222255; font-family: monospace">
 ros2 topic echo /gazebo_ros_imu_sensor/node/out
@@ -544,7 +542,7 @@ ros2 topic echo /gazebo_ros_imu_sensor/node/out
   <</imu>>
   <<plugin name="node" filename="libgazebo_ros_imu_sensor.so">>
     <<ros>>
-      <<namespace>>/gazebo_ros_imu<</namespace>>
+      <<namespace>>/gazebo_ros_imu_sensor<</namespace>>
     <</ros>>
   <</plugin>>
 <</sensor>>
@@ -554,7 +552,7 @@ ros2 topic echo /gazebo_ros_imu_sensor/node/out
         <keyframe type='cam_pose' pose='-1430.209229 1108.427246 -15.219577 0 0.736000 -2.108001'
             text='<h2>Gazebo ROS force plugin demo</h2>
 
-<h3>Try for example</h3>
+<h3>Apply force</h3>
 
 <p style="color: #222255; font-family: monospace">
 ros2 topic pub -1 /gazebo_ros_force/gazebo_ros_force geometry_msgs/Wrench "force: {x: 10.0, z: 100.0}"
@@ -563,13 +561,55 @@ ros2 topic pub -1 /gazebo_ros_force/gazebo_ros_force geometry_msgs/Wrench "force
 <h3>Model SDF</h3>
 
 <pre style="color: #222255; font-family: monospace">
+<<model name="vehicle">>
+  <<link name="chassis">>
+    <<pose>>-0.151427 -0 0.175 0 -0 0<</pose>>
+    <<inertial>>
+      <<mass>>1.14395<</mass>>
+      <<inertia>>
+        <<ixx>>0.126164<</ixx>>
+        <<ixy>>0<</ixy>>
+        <<ixz>>0<</ixz>>
+        <<iyy>>0.416519<</iyy>>
+        <<iyz>>0<</iyz>>
+        <<izz>>0.481014<</izz>>
+      <</inertia>>
+    <</inertial>>
+    <<visual name="visual">>
+      <<geometry>>
+        <<box>>
+          <<size>>2.01142 1 0.568726<</size>>
+        <</box>>
+      <</geometry>>
+    <</visual>>
+    <<collision name="collision">>
+      <<geometry>>
+        <<box>>
+          <<size>>2.01142 1 0.568726<</size>>
+        <</box>>
+      <</geometry>>
+    <</collision>>
+    <<!-- omitting sensors -->>
+  <</link>>
+
+  <<!-- omitting other plugins, joints and plugins -->>
+
+  <<plugin name="force_node" filename="libgazebo_ros_force.so">>
+    <<ros>>
+      <<namespace>>/gazebo_ros_force<</namespace>>
+    <</ros>>
+    <<link_name>>chassis<</link_name>>
+    <<force_frame>>world<</force_frame>>
+  <</plugin>>
+
+<</model>>
 </pre>
 '/>
 
         <keyframe type='cam_pose' pose='-2603.962158 979.824951 -34.316021 0 -0.046 1.039188'
             text='<h2>Gazebo ROS bumper plugin demo</h2>
 
-<h3>Try for example</h3>
+<h3>Get state updates</h3>
 
 <p style="color: #222255; font-family: monospace">
 ros2 topic echo /gazebo_ros_bumper/bumper_states
@@ -596,25 +636,57 @@ ros2 topic echo /gazebo_ros_bumper/bumper_states
         <keyframe type='cam_pose' pose='1617.726807 1637.341064 48.344860 -0.000001 0.824002 1.120816'
             text='<h2>Gazebo ROS ray plugin demo</h2>
 
-<h3>Try for example</h3>
+<h3>View data</h3>
 
 <p style="color: #222255; font-family: monospace">
 ros2 run rviz2 rviz2
 </p>
 
-Add the topic <b>/gazebo_ros_ray/node/out</b> and change the
-fixed frame to <b>ray_link</b>.
+Inside RViz:
+
+<ul>
+<li>Add the topic <b>/gazebo_ros_ray/node/out</b></li>
+<li>Make sure the fixed frame is <b>map</b></li>
+<li>Make sure the <b>unreliable</b> box is checked</li>
+</ul>
 
 <h3>Sensor SDF</h3>
 
 <pre style="color: #222255; font-family: monospace">
+<<sensor name="sensor_gpu_ray" type="gpu_ray">>
+  <<pose>>0.5 0 0 0 0 0<</pose>>
+  <<ray>>
+    <<scan>>
+      <<horizontal>>
+        <<samples>>100<</samples>>
+        <<resolution>>1.0<</resolution>>
+        <<min_angle>>-1.0<</min_angle>>
+        <<max_angle>>1.0<</max_angle>>
+      <</horizontal>>
+    <</scan>>
+    <<range>>
+      <<min>>0.05<</min>>
+      <<max>>13.0<</max>>
+    <</range>>
+  <</ray>>
+  <<always_on>>true<</always_on>>
+  <<visualize>>true<</visualize>>
+  <<update_rate>>10.0<</update_rate>>
+  <<plugin name="node" filename="libgazebo_ros_ray_sensor.so">>
+    <<ros>>
+      <<namespace>>/gazebo_ros_ray<</namespace>>
+    <</ros>>
+    <<output_type>>sensor_msgs/LaserScan<</output_type>>
+    <<frame_name>>map<</frame_name>>
+  <</plugin>>
+<</sensor>>
 </pre>
 '/>
 
         <keyframe type='cam_pose' pose='1663.378662 1643.339600 29.441582 0 0.464001 2.652001'
             text='<h2>Gazebo ROS planar move plugin demo</h2>
 
-<h3>Try for example</h3>
+<h3>Send commands</h3>
 
 <p style="color: #222255; font-family: monospace">
 ros2 topic pub /gazebo_ros_planar_move/cmd_vel geometry_msgs/Twist "{angular: {z: 0.3}}" -1
@@ -623,13 +695,48 @@ ros2 topic pub /gazebo_ros_planar_move/cmd_vel geometry_msgs/Twist "{angular: {z
 <h3>Model SDF</h3>
 
 <pre style="color: #222255; font-family: monospace">
+<<model name="model_to_move">>
+  <<pose>>
+    1643 1662 15 0 0 0
+  <</pose>>
+  <<link name="link">>
+    <<collision name="collision">>
+      <<geometry>>
+        <<box>>
+          <<size>>1 1 1<</size>>
+        <</box>>
+      <</geometry>>
+    <</collision>>
+    <<visual name="visual">>
+      <<geometry>>
+        <<box>>
+          <<size>>1 1 1<</size>>
+        <</box>>
+      <</geometry>>
+      <<material>>
+        <<script>>
+          <<uri>>file://media/materials/scripts/gazebo.material<</uri>>
+          <<name>>Gazebo/Red<</name>>
+        <</script>>
+      <</material>>
+    <</visual>>
+  <</link>>
+
+  <<plugin name="node" filename="libgazebo_ros_planar_move.so">>
+    <<ros>>
+      <<namespace>>/gazebo_ros_planar_move<</namespace>>
+    <</ros>>
+
+    <<update_rate>>50<</update_rate>>
+  <</plugin>>
+<</model>>
 </pre>
 '/>
 
         <keyframe type='cam_pose' pose='736.288 691.55 484.16 0 0.047 -2.59'
             text='<h2>Gazebo ROS joint state publisher plugin demo</h2>
 
-<h3>Try for example</h3>
+<h3>Listen to joint states</h3>
 
 <p style="color: #222255; font-family: monospace">
 ros2 topic echo /gazebo_ros_joint_state_publisher/joint_states
@@ -638,13 +745,99 @@ ros2 topic echo /gazebo_ros_joint_state_publisher/joint_states
 <h3>Model SDF</h3>
 
 <pre style="color: #222255; font-family: monospace">
+<<model name="pendulum">>
+  <<pose>>
+    732.69
+    687.57
+    484.66
+    0
+    0
+    0
+  <</pose>>
+  <<link name="canonical">>
+  <</link>>
+  <<link name="upper_link">>
+    <<pose>>0 0 0 -1.5708 0 0<</pose>>
+    <<inertial>>
+      <<pose>>0 0 0.5 0 0 0<</pose>>
+    <</inertial>>
+    <<visual name="vis_cylinder">>
+      <<pose>>0 0 0.5 0 0 0<</pose>>
+      <<geometry>>
+        <<cylinder>>
+          <<radius>>0.1<</radius>>
+          <<length>>0.9<</length>>
+        <</cylinder>>
+      <</geometry>>
+      <<material>>
+        <<script>>
+          <<uri>>file://media/materials/scripts/gazebo.material<</uri>>
+          <<name>>Gazebo/Yellow<</name>>
+        <</script>>
+      <</material>>
+    <</visual>>
+  <</link>>
+  <<link name="lower_link">>
+    <<pose>>0.2 0.9 0 -2 0 0<</pose>>
+    <<self_collide>>0<</self_collide>>
+    <<inertial>>
+      <<pose>>0 0 0.45 0 0 0<</pose>>
+    <</inertial>>
+    <<visual name="vis_cylinder">>
+      <<pose>>0 0 0.45 0 0 0<</pose>>
+      <<geometry>>
+        <<cylinder>>
+          <<radius>>0.1<</radius>>
+          <<length>>0.9<</length>>
+        <</cylinder>>
+      <</geometry>>
+      <<material>>
+        <<script>>
+          <<uri>>file://media/materials/scripts/gazebo.material<</uri>>
+          <<name>>Gazebo/Green<</name>>
+        <</script>>
+      <</material>>
+    <</visual>>
+  <</link>>
+  <<joint name="world_joint" type="fixed">>
+    <<parent>>world<</parent>>
+    <<child>>canonical<</child>>
+    <<axis>>
+      <<xyz>>1.0 0 0<</xyz>>
+    <</axis>>
+  <</joint>>
+  <<joint name="upper_joint" type="revolute">>
+    <<parent>>canonical<</parent>>
+    <<child>>upper_link<</child>>
+    <<axis>>
+      <<xyz>>1.0 0 0<</xyz>>
+    <</axis>>
+  <</joint>>
+  <<joint name="lower_joint" type="revolute">>
+    <<parent>>upper_link<</parent>>
+    <<child>>lower_link<</child>>
+    <<axis>>
+      <<xyz>>1.0 0 0<</xyz>>
+    <</axis>>
+  <</joint>>
+  <<plugin name="publisher"
+      filename="libgazebo_ros_joint_state_publisher.so">>
+    <<ros>>
+      <<namespace>>/gazebo_ros_joint_state_publisher<</namespace>>
+    <</ros>>
+    <<update_rate>>1<</update_rate>>
+    <<joint_name>>upper_joint<</joint_name>>
+    <<joint_name>>lower_joint<</joint_name>>
+  <</plugin>>
+  <<!-- omitting other plugins -->>
+<</model>>
 </pre>
 '/>
 
         <keyframe type='cam_pose' pose='738.563599 681.777771 484.139069 0 -0.040999 2.729186'
             text='<h2>Gazebo ROS joint pose trajectory plugin demo</h2>
 
-<h3>Try for example</h3>
+<h3>Send trajectory</h3>
 
 <p style="color: #222255; font-family: monospace">
 ros2 topic pub /gazebo_ros_joint_pose_trajectory/set_joint_trajectory trajectory_msgs/msg/JointTrajectory "{header: {frame_id: world}, joint_names: {upper_joint}, points: [{positions: {0, 0.1, 0.2, 0.3, 0.4, 0.5}}]}"
@@ -653,15 +846,97 @@ ros2 topic pub /gazebo_ros_joint_pose_trajectory/set_joint_trajectory trajectory
 <h3>Model SDF</h3>
 
 <pre style="color: #222255; font-family: monospace">
+<<model name="pendulum">>
+  <<pose>>
+    732.69
+    687.57
+    484.66
+    0
+    0
+    0
+  <</pose>>
+  <<link name="canonical">>
+  <</link>>
+  <<link name="upper_link">>
+    <<pose>>0 0 0 -1.5708 0 0<</pose>>
+    <<inertial>>
+      <<pose>>0 0 0.5 0 0 0<</pose>>
+    <</inertial>>
+    <<visual name="vis_cylinder">>
+      <<pose>>0 0 0.5 0 0 0<</pose>>
+      <<geometry>>
+        <<cylinder>>
+          <<radius>>0.1<</radius>>
+          <<length>>0.9<</length>>
+        <</cylinder>>
+      <</geometry>>
+      <<material>>
+        <<script>>
+          <<uri>>file://media/materials/scripts/gazebo.material<</uri>>
+          <<name>>Gazebo/Yellow<</name>>
+        <</script>>
+      <</material>>
+    <</visual>>
+  <</link>>
+  <<link name="lower_link">>
+    <<pose>>0.2 0.9 0 -2 0 0<</pose>>
+    <<self_collide>>0<</self_collide>>
+    <<inertial>>
+      <<pose>>0 0 0.45 0 0 0<</pose>>
+    <</inertial>>
+    <<visual name="vis_cylinder">>
+      <<pose>>0 0 0.45 0 0 0<</pose>>
+      <<geometry>>
+        <<cylinder>>
+          <<radius>>0.1<</radius>>
+          <<length>>0.9<</length>>
+        <</cylinder>>
+      <</geometry>>
+      <<material>>
+        <<script>>
+          <<uri>>file://media/materials/scripts/gazebo.material<</uri>>
+          <<name>>Gazebo/Green<</name>>
+        <</script>>
+      <</material>>
+    <</visual>>
+  <</link>>
+  <<joint name="world_joint" type="fixed">>
+    <<parent>>world<</parent>>
+    <<child>>canonical<</child>>
+    <<axis>>
+      <<xyz>>1.0 0 0<</xyz>>
+    <</axis>>
+  <</joint>>
+  <<joint name="upper_joint" type="revolute">>
+    <<parent>>canonical<</parent>>
+    <<child>>upper_link<</child>>
+    <<axis>>
+      <<xyz>>1.0 0 0<</xyz>>
+    <</axis>>
+  <</joint>>
+  <<joint name="lower_joint" type="revolute">>
+    <<parent>>upper_link<</parent>>
+    <<child>>lower_link<</child>>
+    <<axis>>
+      <<xyz>>1.0 0 0<</xyz>>
+    <</axis>>
+  <</joint>>
+  <<plugin name="controller"
+      filename="libgazebo_ros_joint_pose_trajectory.so">>
+    <<ros>>
+      <<namespace>>/gazebo_ros_joint_pose_trajectory<</namespace>>
+    <</ros>>
+    <<update_rate>>50<</update_rate>>
+  <</plugin>>
+  <<!-- omitting other plugins -->>
+<</model>>
 </pre>
 '/>
 
         <keyframe type='cam_pose' pose='5.95337 -5.07052 4.47829 0 0.432748 2.25139'
             text='<h2>Gazebo ROS projector plugin demo</h2>
 
-<h3>Try for example</h3>
-
-Turn it off:
+<h3>Switch projector</h3>
 
 <p style="color: #222255; font-family: monospace">
 ros2 topic pub /gazebo_ros_projector/switch std_msgs/msg/Bool "data: false" -1
@@ -670,13 +945,50 @@ ros2 topic pub /gazebo_ros_projector/switch std_msgs/msg/Bool "data: false" -1
 <h3>Model SDF</h3>
 
 <pre style="color: #222255; font-family: monospace">
+<<model name="projector_model">>
+  <<pose>>-1.326927 -0.038119 1.261517 1.570796 0 -0.551969<</pose>>
+  <<static>>true<</static>>
+  <<link name="projector_link">>
+    <<collision name="collision">>
+      <<geometry>>
+        <<sphere>>
+          <<radius>>0.1<</radius>>
+        <</sphere>>
+      <</geometry>>
+    <</collision>>
+    <<visual name="visual">>
+      <<geometry>>
+        <<sphere>>
+          <<radius>>0.1<</radius>>
+        <</sphere>>
+      <</geometry>>
+      <<material>>
+        <<script>>Gazebo/Grey<</script>>
+      <</material>>
+    <</visual>>
+    <<projector name="texture_projector">>
+      <<pose>>0 0 0 0 0 0<</pose>>
+      <<texture>>gazebo_ros_projector/materials/textures/gazebo_ros_projector.png<</texture>>
+      <<fov>>0.959931088597<</fov>>
+      <<near_clip>>0.1<</near_clip>>
+      <<far_clip>>10<</far_clip>>
+    <</projector>>
+  <</link>>
+  <<plugin name="node" filename="libgazebo_ros_projector.so">>
+    <<ros>>
+      <<namespace>>/gazebo_ros_projector<</namespace>>
+    <</ros>>
+    <<projector_link>>projector_link<</projector_link>>
+    <<projector_name>>texture_projector<</projector_name>>
+  <</plugin>>
+<</model>>
 </pre>
 '/>
 
         <keyframe type='cam_pose' pose='2510.590820 963.620850 1423.213379 0 0.339667 -2.876979'
             text='<h2>Gazebo ROS hand of god plugin demo</h2>
 
-<h3>Try for example</h3>
+<h3>Send commands</h3>
 
 <p style="color: #222255; font-family: monospace">
 ros2 run tf2_ros static_transform_publisher 2497 954.6 1418 1 0 0 0 world link1_desired
@@ -689,13 +1001,134 @@ ros2 run tf2_ros tf2_echo world link1_actual
 <h3>Model SDF</h3>
 
 <pre style="color: #222255; font-family: monospace">
+<<model name="chain_of_god">>
+  <<pose>>
+    2497 954.6 1416 0 0 0
+  <</pose>>
+  <<link name="canonical">>
+  <</link>>
+  <<link name="link1">>
+    <<pose>>0 0 0 -1.5708 0 0<</pose>>
+    <<inertial>>
+      <<pose>>0 0 0.5 0 0 0<</pose>>
+    <</inertial>>
+    <<visual name="visual">>
+      <<pose>>0 0 0.5 0 0 0<</pose>>
+      <<geometry>>
+        <<cylinder>>
+          <<radius>>0.1<</radius>>
+          <<length>>1.0<</length>>
+        <</cylinder>>
+      <</geometry>>
+      <<material>>
+        <<script>>
+          <<uri>>file://media/materials/scripts/gazebo.material<</uri>>
+          <<name>>Gazebo/Yellow<</name>>
+        <</script>>
+      <</material>>
+    <</visual>>
+    <<collision name="collision">>
+      <<pose>>0 0 0.5 0 0 0<</pose>>
+      <<geometry>>
+        <<cylinder>>
+          <<radius>>0.1<</radius>>
+          <<length>>1.0<</length>>
+        <</cylinder>>
+      <</geometry>>
+    <</collision>>
+  <</link>>
+  <<link name="link2">>
+    <<pose>>0 0.9 0 -1.57 0 0<</pose>>
+    <<self_collide>>0<</self_collide>>
+    <<inertial>>
+      <<pose>>0 0 0.5 0 0 0<</pose>>
+    <</inertial>>
+    <<visual name="visual">>
+      <<pose>>0 0 0.5 0 0 0<</pose>>
+      <<geometry>>
+        <<cylinder>>
+          <<radius>>0.09<</radius>>
+          <<length>>1.0<</length>>
+        <</cylinder>>
+      <</geometry>>
+      <<material>>
+        <<script>>
+          <<uri>>file://media/materials/scripts/gazebo.material<</uri>>
+          <<name>>Gazebo/Green<</name>>
+        <</script>>
+      <</material>>
+    <</visual>>
+    <<collision name="collision">>
+      <<pose>>0 0 0.5 0 0 0<</pose>>
+      <<geometry>>
+        <<cylinder>>
+          <<radius>>0.09<</radius>>
+          <<length>>1.0<</length>>
+        <</cylinder>>
+      <</geometry>>
+    <</collision>>
+  <</link>>
+  <<link name="link3">>
+    <<pose>>0 1.8 0 -1.57 0 0<</pose>>
+    <<self_collide>>0<</self_collide>>
+    <<inertial>>
+      <<pose>>0 0 0.5 0 0 0<</pose>>
+    <</inertial>>
+    <<visual name="visual">>
+      <<pose>>0 0 0.5 0 0 0<</pose>>
+      <<geometry>>
+        <<cylinder>>
+          <<radius>>0.08<</radius>>
+          <<length>>1.0<</length>>
+        <</cylinder>>
+      <</geometry>>
+      <<material>>
+        <<script>>
+          <<uri>>file://media/materials/scripts/gazebo.material<</uri>>
+          <<name>>Gazebo/Blue<</name>>
+        <</script>>
+      <</material>>
+    <</visual>>
+    <<collision name="collision">>
+      <<pose>>0 0 0.5 0 0 0<</pose>>
+      <<geometry>>
+        <<cylinder>>
+          <<radius>>0.08<</radius>>
+          <<length>>1.0<</length>>
+        <</cylinder>>
+      <</geometry>>
+    <</collision>>
+  <</link>>
+  <<joint name="joint1" type="revolute">>
+    <<parent>>link1<</parent>>
+    <<child>>link2<</child>>
+    <<axis>>
+      <<xyz>>1.0 0 0<</xyz>>
+    <</axis>>
+  <</joint>>
+  <<joint name="joint2" type="revolute">>
+    <<parent>>link2<</parent>>
+    <<child>>link3<</child>>
+    <<axis>>
+      <<xyz>>1.0 0 0<</xyz>>
+    <</axis>>
+  <</joint>>
+  <<plugin name="node" filename="libgazebo_ros_hand_of_god.so">>
+    <<ros>>
+      <<namespace>>/gazebo_ros_hand_of_god<</namespace>>
+    <</ros>>
+    <<link_name>>link1<</link_name>>
+    <<frame_id>>link1<</frame_id>>
+  <</plugin>>
+
+<</model>>
 </pre>
 '/>
 
         <keyframe type='cam_pose' pose='-759.972473 492.841339 -30.519588 0 0.01 0.8'
             text='<h2>Gazebo ROS vacuum gripper plugin demo</h2>
 
-<h3>Try for example</h3>
+<h3>Switch gripper</h3>
 
 <p style="color: #222255; font-family: monospace">
 ros2 service call /gazebo_ros_vacuum_gripper/switch std_srvs/srv/SetBool "{data: True}"
@@ -708,6 +1141,50 @@ ros2 topic echo /gazebo_ros_vacuum_gripper/grasping
 <h3>Model SDF</h3>
 
 <pre style="color: #222255; font-family: monospace">
+<<model name="vacuum_gripper">>
+  <<static>>true<</static>>
+  <<pose>>
+    -752 500 -30 0 0 0
+  <</pose>>
+  <<link name="link">>
+    <<collision name="collision">>
+      <<geometry>>
+        <<cylinder>>
+          <<radius>>0.3<</radius>>
+          <<length>>1<</length>>
+        <</cylinder>>
+      <</geometry>>
+    <</collision>>
+    <<visual name="visual">>
+      <<geometry>>
+        <<cylinder>>
+          <<radius>>0.3<</radius>>
+          <<length>>1<</length>>
+        <</cylinder>>
+      <</geometry>>
+      <<material>>
+        <<script>>
+          <<uri>>file://media/materials/scripts/gazebo.material<</uri>>
+          <<name>>Gazebo/Orange<</name>>
+        <</script>>
+      <</material>>
+    <</visual>>
+  <</link>>
+
+  <<plugin name="node" filename="libgazebo_ros_vacuum_gripper.so">>
+
+    <<ros>>
+      <<namespace>>/gazebo_ros_vacuum_gripper<</namespace>>
+    <</ros>>
+
+    <<link_name>>link<</link_name>>
+
+    <<max_distance>>2.0<</max_distance>>
+
+    <<fixed>>ground<</fixed>>
+
+  <</plugin>>
+<</model>>
 </pre>
 '/>
 
@@ -989,12 +1466,12 @@ ros2 topic echo /gazebo_ros_vacuum_gripper/grasping
       <uri>model://gazebo_ros_force</uri>
     </include>
 
-    <model name='vehicle'>
+    <model name="vehicle">
       <pose>
         -1452 1087 -36 0 0 0
       </pose>
 
-      <link name='chassis'>
+      <link name="chassis">
         <pose>-0.151427 -0 0.175 0 -0 0</pose>
         <inertial>
           <mass>1.14395</mass>
@@ -1007,14 +1484,14 @@ ros2 topic echo /gazebo_ros_vacuum_gripper/grasping
             <izz>0.481014</izz>
           </inertia>
         </inertial>
-        <visual name='visual'>
+        <visual name="visual">
           <geometry>
             <box>
               <size>2.01142 1 0.568726</size>
             </box>
           </geometry>
         </visual>
-        <collision name='collision'>
+        <collision name="collision">
           <geometry>
             <box>
               <size>2.01142 1 0.568726</size>
@@ -1099,7 +1576,7 @@ ros2 topic echo /gazebo_ros_vacuum_gripper/grasping
         </sensor>
       </link>
 
-      <link name='left_wheel'>
+      <link name="left_wheel">
         <pose>0.554283 0.625029 -0.025 0 0 0</pose>
         <inertial>
           <mass>2</mass>
@@ -1112,14 +1589,14 @@ ros2 topic echo /gazebo_ros_vacuum_gripper/grasping
             <izz>0.125</izz>
           </inertia>
         </inertial>
-        <visual name='visual'>
+        <visual name="visual">
           <geometry>
             <sphere>
               <radius>0.3</radius>
             </sphere>
           </geometry>
         </visual>
-        <collision name='collision'>
+        <collision name="collision">
           <geometry>
             <sphere>
               <radius>0.3</radius>
@@ -1148,7 +1625,7 @@ ros2 topic echo /gazebo_ros_vacuum_gripper/grasping
         </collision>
       </link>
 
-      <link name='right_wheel'>
+      <link name="right_wheel">
         <pose>0.554282 -0.625029 -0.025 0 0 0</pose>
         <inertial>
           <mass>2</mass>
@@ -1161,14 +1638,14 @@ ros2 topic echo /gazebo_ros_vacuum_gripper/grasping
             <izz>0.125</izz>
           </inertia>
         </inertial>
-        <visual name='visual'>
+        <visual name="visual">
           <geometry>
             <sphere>
               <radius>0.3</radius>
             </sphere>
           </geometry>
         </visual>
-        <collision name='collision'>
+        <collision name="collision">
           <geometry>
             <sphere>
               <radius>0.3</radius>
@@ -1197,7 +1674,7 @@ ros2 topic echo /gazebo_ros_vacuum_gripper/grasping
         </collision>
       </link>
 
-      <link name='caster'>
+      <link name="caster">
         <pose>-0.957138 -0 -0.125 0 -0 0</pose>
         <inertial>
           <mass>1</mass>
@@ -1210,14 +1687,14 @@ ros2 topic echo /gazebo_ros_vacuum_gripper/grasping
             <izz>0.1</izz>
           </inertia>
         </inertial>
-        <visual name='visual'>
+        <visual name="visual">
           <geometry>
             <sphere>
               <radius>0.2</radius>
             </sphere>
           </geometry>
         </visual>
-        <collision name='collision'>
+        <collision name="collision">
           <geometry>
             <sphere>
               <radius>0.2</radius>
@@ -1226,7 +1703,7 @@ ros2 topic echo /gazebo_ros_vacuum_gripper/grasping
         </collision>
       </link>
 
-      <joint name='left_wheel_joint' type='revolute'>
+      <joint name="left_wheel_joint" type="revolute">
         <parent>chassis</parent>
         <child>left_wheel</child>
         <axis>
@@ -1238,7 +1715,7 @@ ros2 topic echo /gazebo_ros_vacuum_gripper/grasping
         </axis>
       </joint>
 
-      <joint name='right_wheel_joint' type='revolute'>
+      <joint name="right_wheel_joint" type="revolute">
         <parent>chassis</parent>
         <child>right_wheel</child>
         <axis>
@@ -1250,12 +1727,12 @@ ros2 topic echo /gazebo_ros_vacuum_gripper/grasping
         </axis>
       </joint>
 
-      <joint name='caster_wheel' type='ball'>
+      <joint name="caster_wheel" type="ball">
         <parent>chassis</parent>
         <child>caster</child>
       </joint>
 
-      <plugin name='node' filename='libgazebo_ros_diff_drive.so'>
+      <plugin name="node" filename="libgazebo_ros_diff_drive.so">
 
         <ros>
           <namespace>/gazebo_ros_diff_drive</namespace>
@@ -1370,7 +1847,7 @@ ros2 topic echo /gazebo_ros_vacuum_gripper/grasping
         </visual>
       </link>
 
-      <plugin name='node' filename='libgazebo_ros_planar_move.so'>
+      <plugin name="node" filename="libgazebo_ros_planar_move.so">
         <ros>
           <namespace>/gazebo_ros_planar_move</namespace>
         </ros>
@@ -1589,6 +2066,7 @@ ros2 topic echo /gazebo_ros_vacuum_gripper/grasping
               <namespace>/gazebo_ros_ray</namespace>
             </ros>
             <output_type>sensor_msgs/LaserScan</output_type>
+            <frame_name>map</frame_name>
           </plugin>
         </sensor>
       </link>
@@ -1788,11 +2266,11 @@ ros2 topic echo /gazebo_ros_vacuum_gripper/grasping
       </plugin>
     </model>
 
-    <model name='projectee'>
+    <model name="projectee">
       <static>true</static>
       <pose>1.04 2.9 1.49 0 0 -0.288</pose>
-      <link name='link'>
-        <visual name='visual'>
+      <link name="link">
+        <visual name="visual">
           <geometry>
             <box>
               <size>6.4 0.01 5</size>
@@ -1852,7 +2330,7 @@ ros2 topic echo /gazebo_ros_vacuum_gripper/grasping
 
     </model>
 
-    <model name='vacuum_gripper'>
+    <model name="vacuum_gripper">
       <static>true</static>
       <pose>
         -752 500 -30 0 0 0
@@ -1882,7 +2360,7 @@ ros2 topic echo /gazebo_ros_vacuum_gripper/grasping
         </visual>
       </link>
 
-      <plugin name='node' filename='libgazebo_ros_vacuum_gripper.so'>
+      <plugin name="node" filename="libgazebo_ros_vacuum_gripper.so">
 
         <ros>
           <namespace>/gazebo_ros_vacuum_gripper</namespace>
@@ -1897,7 +2375,7 @@ ros2 topic echo /gazebo_ros_vacuum_gripper/grasping
       </plugin>
     </model>
 
-    <model name='vacuum_grippee'>
+    <model name="vacuum_grippee">
       <pose>
         -752 500 -31 0 0 0
       </pose>
