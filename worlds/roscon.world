@@ -3,7 +3,6 @@
 
 <!-- TODO
 
-* Add more plugins (13/14)
 * Update all SDF snippets
 
 -->
@@ -99,7 +98,7 @@
 
         <keyframe type='stack' number='33'/>
 
-        <keyframe type='cam_pose' pose='645.22 129.59 190.3 0 -0.05 -2.92'
+        <keyframe type='cam_pose' pose='-2615.004395 989.036499 -33.712574 0 -0.017604 -0.124844'
             text='<h2>Gazebo ROS camera plugin demo</h2>
 
 <h3>Check camera info</h3>
@@ -569,7 +568,7 @@ ros2 topic pub -1 /gazebo_ros_force/gazebo_ros_force geometry_msgs/Wrench "force
 </pre>
 '/>
 
-        <keyframe type='cam_pose' pose='-1460.583984 1120.468506 -35.112858 0 -0.164001 -1.844003'
+        <keyframe type='cam_pose' pose='-2603.962158 979.824951 -34.316021 0 -0.046 1.039188'
             text='<h2>Gazebo ROS bumper plugin demo</h2>
 
 <h3>Try for example</h3>
@@ -596,7 +595,7 @@ ros2 topic echo /gazebo_ros_bumper/bumper_states
 </pre>
 '/>
 
-        <keyframe type='cam_pose' pose='-1458.999878 1093.669312 -35.929043 0 -0.211833 2.372457'
+        <keyframe type='cam_pose' pose='1617.726807 1637.341064 48.344860 -0.000001 0.824002 1.120816'
             text='<h2>Gazebo ROS ray plugin demo</h2>
 
 <h3>Try for example</h3>
@@ -661,7 +660,7 @@ ros2 topic pub /gazebo_ros_projector/switch std_msgs/msg/Bool "data: false" -1
 </pre>
 '/>
 
-        <keyframe type='cam_pose' pose='-1417.999390 1077.527222 -30.443043 0 0.217999 -2.552000'
+        <keyframe type='cam_pose' pose='1663.378662 1643.339600 29.441582 0 0.464001 2.652001'
             text='<h2>Gazebo ROS planar move plugin demo</h2>
 
 <h3>Try for example</h3>
@@ -774,46 +773,125 @@ ros2 topic echo /gazebo_ros_vacuum_gripper/grasping
 
     <include>
       <name>gazebo_ros_camera</name>
-      <pose>642.5 129.79 190 0 -0.04 -2.49</pose>
+      <pose>
+        -2612.518799 987.814453 -33.923840 0 0 -1.798245
+      </pose>
       <uri>model://gazebo_ros_camera</uri>
     </include>
 
-    <!-- quadcopter UAV -->
-    <actor name='quadrotor'>
-      <pose>644 124.19 190 0 -0.1898 -2.715</pose>
-      <link name='link'>
-        <pose frame=''>0 0 0.182466 0 -0 0</pose>
-        <visual name='visual'>
+    <include>
+      <name>gazebo_ros_bumper</name>
+      <pose>
+        -2603.231934 984.255005 -34.586113 0 0 -0.56
+      </pose>
+      <uri>model://gazebo_ros_bumper</uri>
+    </include>
+
+    <model name="ground_ball">
+      <pose>
+        -2596 990 -35.8 0 0 0
+      </pose>
+
+      <static>true</static>
+      <link name="link">
+        <visual name="visual">
+          <geometry>
+            <plane>
+              <normal>0 0 1</normal>
+              <size>10 10</size>
+            </plane>
+          </geometry>
+          <material>
+            <script>
+              <uri>file://media/materials/scripts/gazebo.material</uri>
+              <name>Gazebo/Residential</name>
+            </script>
+          </material>
+        </visual>
+        <collision name="collision">
+          <geometry>
+            <box><size>10 10 0.001</size></box>
+          </geometry>
+          <surface>
+            <bounce>
+              <restitution_coefficient>1.0</restitution_coefficient>
+              <threshold>0</threshold>
+            </bounce>
+            <contact>
+              <ode>
+                <max_vel>10000</max_vel>
+                <min_depth>0.001</min_depth>
+              </ode>
+            </contact>
+          </surface>
+        </collision>
+      </link>
+
+    </model>
+
+    <model name="ball">
+      <pose>
+        -2596 990 -30.8 0 0 0
+      </pose>
+      <allow_auto_disable>false</allow_auto_disable>
+      <static>false</static>
+      <link name="link">
+        <inertial>
+          <mass>0.026</mass>
+          <!-- inertia based on solid sphere 2/5 mr^2 -->
+          <inertia>
+            <ixx>1.664e-5</ixx>
+            <iyy>1.664e-5</iyy>
+            <izz>1.664e-5</izz>
+            <ixy>0</ixy>
+            <ixz>0</ixz>
+            <iyz>0</iyz>
+          </inertia>
+        </inertial>
+        <collision name="collision">
+          <geometry>
+            <sphere>
+              <radius>0.20</radius>
+            </sphere>
+          </geometry>
+          <surface>
+            <bounce>
+              <restitution_coefficient>10.0</restitution_coefficient>
+              <threshold>0</threshold>
+            </bounce>
+            <contact>
+              <ode>
+                <max_vel>10000</max_vel>
+                <min_depth>0.001</min_depth>
+              </ode>
+            </contact>
+          </surface>
+        </collision>
+        <visual name="visual">
           <geometry>
             <mesh>
-              <uri>model://quadrotor/meshes/quadrotor_base.dae</uri>
-              <scale>1 1 1</scale>
+              <scale>0.20 0.20 0.20</scale>
+              <uri>model://robocup_3Dsim_ball/meshes/ball.dae</uri>
             </mesh>
           </geometry>
         </visual>
+        <sensor type="contact" name="bumper">
+          <update_rate>5</update_rate>
+          <contact>
+            <collision>collision</collision>
+          </contact>
+          <plugin name="node" filename="libgazebo_ros_bumper.so">
+            <ros>
+              <namespace>/gazebo_ros_bumper</namespace>
+            </ros>
+            <frame_name>world</frame_name>
+          </plugin>
+        </sensor>
       </link>
-        <script>
-          <loop>true</loop>
-          <auto_start>true</auto_start>
-          <trajectory id="0" type="square">
-             <waypoint>
-                <time>0.0</time>
-                <pose>641.230591 127.227409 190.249557 0.258249 -0.189799 -2.715000</pose>
-             </waypoint>
-             <waypoint>
-                <time>1.0</time>
-                <pose>637.627747 127.693840 190.502991 -0.506433 0.329275 -0.918891</pose>
-             </waypoint>
-             <waypoint>
-                <time>2.0</time>
-                <pose>641.230591 127.227409 190.249557 0.258249 -0.189799 -2.715000</pose>
-             </waypoint>
-          </trajectory>
-        </script>
-    </actor>
+    </model>
 
     <model name="camera">
-      <pose>644 129.19 190 0 -0.1898 -2.715</pose>
+      <pose>-2609.969971 990.691833 -34.168598 0 -0.014000 -0.116813</pose>
       <static>true</static>
       <link name="link">
         <sensor type="camera" name="camera">
@@ -896,9 +974,9 @@ ros2 topic echo /gazebo_ros_vacuum_gripper/grasping
     </include>
 
     <include>
-      <name>gazebo_ros_gps</name>
+      <name>gazebo_ros_gps_sensor</name>
       <pose>-1440.46 1107.2 -16.98 0.805 -0.167 0.12</pose>
-      <uri>model://gazebo_ros_gps</uri>
+      <uri>model://gazebo_ros_gps_sensor</uri>
     </include>
 
     <include>
@@ -1220,14 +1298,56 @@ ros2 topic echo /gazebo_ros_vacuum_gripper/grasping
     <include>
       <name>gazebo_ros_planar_move</name>
       <pose>
-        -1421.900879 1076.761719 -31.565561 0.103134 0 -1.009239
+        1660.254761 1643.660522 27.380943 -0.418935 0 1.255741
       </pose>
       <uri>model://gazebo_ros_planar_move</uri>
     </include>
 
-    <model name="box_to_move">
+   <model name="ground_to_move">
       <pose>
-        -1431 1067 -36 0 0 0
+        1643 1662 14.5 0 0 0
+      </pose>
+
+      <static>true</static>
+      <link name="link">
+        <visual name="visual">
+          <geometry>
+            <plane>
+              <normal>0 0 1</normal>
+              <size>10 10</size>
+            </plane>
+          </geometry>
+          <material>
+            <script>
+              <uri>file://media/materials/scripts/gazebo.material</uri>
+              <name>Gazebo/Residential</name>
+            </script>
+          </material>
+        </visual>
+        <collision name="collision">
+          <geometry>
+            <box><size>10 10 0.001</size></box>
+          </geometry>
+          <surface>
+            <bounce>
+              <restitution_coefficient>1.0</restitution_coefficient>
+              <threshold>0</threshold>
+            </bounce>
+            <contact>
+              <ode>
+                <max_vel>10000</max_vel>
+                <min_depth>0.001</min_depth>
+              </ode>
+            </contact>
+          </surface>
+        </collision>
+      </link>
+
+    </model>
+
+    <model name="model_to_move">
+      <pose>
+        1643 1662 15 0 0 0
       </pose>
       <link name="link">
         <collision name="collision">
@@ -1243,6 +1363,12 @@ ros2 topic echo /gazebo_ros_vacuum_gripper/grasping
               <size>1 1 1</size>
             </box>
           </geometry>
+          <material>
+            <script>
+              <uri>file://media/materials/scripts/gazebo.material</uri>
+              <name>Gazebo/Red</name>
+            </script>
+          </material>
         </visual>
       </link>
 
@@ -1386,103 +1512,38 @@ ros2 topic echo /gazebo_ros_vacuum_gripper/grasping
     </model>
 
     <include>
-      <name>gazebo_ros_bumper</name>
-      <pose>-1460.38 1116.94 -34.86 -0.269597 0.020047 -0.11</pose>
-      <uri>model://gazebo_ros_bumper</uri>
-    </include>
-
-    <model name="ball">
-      <pose>
-        -1467 1105 -30.5 0 0 0
-      </pose>
-      <allow_auto_disable>false</allow_auto_disable>
-      <static>false</static>
-      <link name="link">
-        <inertial>
-          <mass>0.026</mass>
-          <!-- inertia based on solid sphere 2/5 mr^2 -->
-          <inertia>
-            <ixx>1.664e-5</ixx>
-            <iyy>1.664e-5</iyy>
-            <izz>1.664e-5</izz>
-            <ixy>0</ixy>
-            <ixz>0</ixz>
-            <iyz>0</iyz>
-          </inertia>
-        </inertial>
-        <collision name="collision">
-          <geometry>
-            <sphere>
-              <radius>0.20</radius>
-            </sphere>
-          </geometry>
-          <surface>
-            <bounce>
-              <restitution_coefficient>10.0</restitution_coefficient>
-              <threshold>0</threshold>
-            </bounce>
-            <contact>
-              <ode>
-                <max_vel>10000</max_vel>
-                <min_depth>0.001</min_depth>
-              </ode>
-            </contact>
-          </surface>
-        </collision>
-        <visual name="visual">
-          <geometry>
-            <mesh>
-              <scale>0.20 0.20 0.20</scale>
-              <uri>model://robocup_3Dsim_ball/meshes/ball.dae</uri>
-            </mesh>
-          </geometry>
-        </visual>
-        <sensor type="contact" name="bumper">
-          <update_rate>5</update_rate>
-          <contact>
-            <collision>collision</collision>
-          </contact>
-          <plugin name="node" filename="libgazebo_ros_bumper.so">
-            <ros>
-              <namespace>/gazebo_ros_bumper</namespace>
-            </ros>
-            <frame_name>world</frame_name>
-          </plugin>
-        </sensor>
-      </link>
-    </model>
-
-    <include>
       <name>gazebo_ros_ray</name>
-      <pose>-1461.602295 1094.847900 -35.691643 -0.0189 -0.028 0.85</pose>
+      <pose>
+        1617.659302 1639.073364 46.026249 -0.705770 0.059721 -0.300298
+      </pose>
       <uri>model://gazebo_ros_ray</uri>
     </include>
 
-    <!-- TODO: ray is looking all crazy -->
     <model name="ray">
       <pose>
-        -1471.141724 1105.001465 -28.713987 1.569737 0.721532 0
+        1638 1667 15 0 0 -0.727
       </pose>
       <static>true</static>
       <link name="ray_link">
-        <sensor name="ray" type="gpu_ray">
-          <visualize>true</visualize>
-          <always_on>true</always_on>
-          <update_rate>60</update_rate>
+        <sensor name="sensor_gpu_ray" type="gpu_ray">
+          <pose>0.5 0 0 0 0 0</pose>
           <ray>
             <scan>
               <horizontal>
-                <samples>60</samples>
+                <samples>100</samples>
                 <resolution>1.0</resolution>
-                <min_angle>-0.5236</min_angle>
-                <max_angle>0.5236</max_angle>
+                <min_angle>-1.0</min_angle>
+                <max_angle>1.0</max_angle>
               </horizontal>
             </scan>
             <range>
-              <min>0.25</min>
-              <max>10.0</max>
+              <min>0.05</min>
+              <max>13.0</max>
             </range>
           </ray>
+          <always_on>true</always_on>
+          <visualize>true</visualize>
+          <update_rate>10.0</update_rate>
           <plugin name="node" filename="libgazebo_ros_ray_sensor.so">
             <ros>
               <namespace>/gazebo_ros_ray</namespace>
