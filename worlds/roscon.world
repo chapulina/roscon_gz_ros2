@@ -2614,14 +2614,8 @@ ros2 topic echo /gazebo_ros_vacuum_gripper/grasping
         0
         0
         -1.0651857368099833
-        <!---105.7659881325859
-        -16.909491218630478
-        223.94041971649898
-        0
-        0
-        -0.5119488473838469-->
       </pose>
-      <uri>model://roscon-slide-12</uri>
+      <uri>model://roscon-slide-13</uri>
     </include>
 
     <include>
@@ -2633,8 +2627,14 @@ ros2 topic echo /gazebo_ros_vacuum_gripper/grasping
         0
         0
         -1.0651857368099833
+        <!---105.7659881325859
+        -16.909491218630478
+        223.94041971649898
+        0
+        0
+        -0.5119488473838469-->
       </pose>
-      <uri>model://roscon-slide-13</uri>
+      <uri>model://roscon-slide-12</uri>
     </include>
 
     <include>
